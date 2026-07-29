@@ -59,11 +59,11 @@
               400: '#D0445A',
             },
             surface: {
-              950: '#0A0A0B',
-              900: '#111113',
-              850: '#161618',
-              800: '#1C1C1F',
-              700: '#27272A',
+              950: '#080607',
+              900: '#100D0E',
+              850: '#161214',
+              800: '#1C1719',
+              700: '#2A2225',
             },
           },
           fontFamily: {
@@ -75,11 +75,12 @@
     };
   </script>
 
-  <link rel="stylesheet" href="./css/style.css" />
-  <link rel="stylesheet" href="./css/animation.css" />
+  <!-- カスタムCSSは Tailwind より後・キャッシュバス付きで読み込み -->
+  <link rel="stylesheet" href="./css/style.css?v=20260729b" />
+  <link rel="stylesheet" href="./css/animation.css?v=20260729b" />
 </head>
 
-<body class="bg-surface-950 text-white antialiased overflow-x-hidden">
+<body class="text-white antialiased overflow-x-hidden">
 
   <!-- ===== 背景の環境光（ページ全体の雰囲気） ===== -->
   <div class="ambient" aria-hidden="true">

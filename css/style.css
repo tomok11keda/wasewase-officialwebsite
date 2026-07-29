@@ -80,7 +80,8 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Zen Kaku Gothic New", sans-serif;
-  background: var(--bg-950);
+  /* Tailwind CDN のユーティリティより優先させるため詳細度を上げる */
+  background-color: var(--bg-950) !important;
   color: var(--text-primary);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -409,6 +410,13 @@ main,
 
 .btn--primary {
   color: #fff;
+  /* 変数 + 直値フォールバック（キャッシュ/上書き耐性） */
+  background: linear-gradient(
+    165deg,
+    #d0445a 0%,
+    #b42f44 38%,
+    #5c1822 100%
+  );
   background: linear-gradient(
     165deg,
     var(--crimson-400) 0%,
@@ -604,14 +612,14 @@ main,
   width: min(110vw, 820px);
   height: min(110vw, 820px);
   transform: translateX(-50%);
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      rgba(212, 68, 90, 0.42) 0%,
-      rgba(150, 40, 58, 0.28) 28%,
-      rgba(61, 16, 24, 0.16) 52%,
-      transparent 72%
-    );
+  /* 直値で指定し、本番キャッシュでも確実にエンジGlowが当たるようにする */
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(212, 68, 90, 0.48) 0%,
+    rgba(150, 40, 58, 0.34) 28%,
+    rgba(92, 24, 34, 0.22) 50%,
+    transparent 74%
+  );
   filter: blur(36px);
   pointer-events: none;
   z-index: 0;
