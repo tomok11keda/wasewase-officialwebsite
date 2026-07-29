@@ -1,0 +1,131 @@
+/**
+ * animation.css
+ * スクロール連動アニメーション用スタイル
+ *
+ * 仕組み:
+ * 1. 初期状態: .reveal に opacity:0 と少しの変形
+ * 2. Intersection Observer が要素を検知
+ * 3. .is-visible を付与 → ふわっと表示
+ *
+ * 派手にしない・短く・滑らか（transform / opacity のみ）が方針です。
+ */
+
+/* ---------------------------------------------------------
+   共通の初期状態
+   --------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------------------------------------------------------
+   バリエーション
+   --------------------------------------------------------- */
+
+/* ふわっとフェード */
+.reveal--fade {
+  transform: none;
+}
+
+/* 下からスライド */
+.reveal--up {
+  transform: translateY(28px);
+}
+
+/* 左から */
+.reveal--left {
+  transform: translateX(-32px);
+}
+
+/* 右から */
+.reveal--right {
+  transform: translateX(32px);
+}
+
+/* 少しだけ拡大しながら出現 */
+.reveal--scale {
+  transform: scale(0.96) translateY(16px);
+}
+
+/* ---------------------------------------------------------
+   ヒーロー入場（初回ロード時）
+   JS 側でも data-reveal を使うが、ヒーローは少し長めに
+   --------------------------------------------------------- */
+.hero .reveal {
+  transition-duration: 0.9s;
+}
+
+/* ---------------------------------------------------------
+   環境光のゆっくりした動き（装飾・控えめ）
+   --------------------------------------------------------- */
+@keyframes ambient-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(3%, 4%) scale(1.05);
+  }
+}
+
+.ambient__blob--1 {
+  animation: ambient-drift 18s ease-in-out infinite;
+}
+
+.ambient__blob--2 {
+  animation: ambient-drift 22s ease-in-out infinite reverse;
+}
+
+.ambient__blob--3 {
+  animation: ambient-drift 26s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------
+   プライマリボタンの微かな光沢（ホバー時以外も存在感）
+   --------------------------------------------------------- */
+@keyframes soft-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+      0 8px 28px rgba(160, 34, 34, 0.35),
+      0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+      0 10px 36px rgba(213, 43, 43, 0.45),
+      0 1px 0 rgba(255, 255, 255, 0.14) inset;
+  }
+}
+
+.hero .btn--primary {
+  animation: soft-pulse 4s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------
+   prefers-reduced-motion
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .ambient__blob--1,
+  .ambient__blob--2,
+  .ambient__blob--3,
+  .hero .btn--primary {
+    animation: none;
+  }
+}
