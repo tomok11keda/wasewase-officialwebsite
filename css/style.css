@@ -1239,6 +1239,50 @@ main,
   font-size: 0.9375rem;
 }
 
+/* フォーム上部：公式感を伝えるブランドロックアップ */
+.signup-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin: 0 0 28px;
+}
+
+.signup-brand__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 22%;
+  overflow: hidden;
+  background: var(--crimson-900);
+  box-shadow: 0 8px 28px rgba(90, 24, 24, 0.32);
+}
+
+.signup-brand__icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  transform-origin: center;
+}
+
+.signup-brand__name {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+}
+
+.signup-brand__tagline {
+  margin: 0;
+  max-width: 28em;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
 .form-field__input {
   width: 100%;
   height: 52px;
