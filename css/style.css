@@ -3,8 +3,8 @@
  * わせわせ — デザインシステムの本体
  *
  * 方針:
- * - Tailwind でレイアウト・余白を補完しつつ、雰囲気はここで定義
- * - 暗め背景 + クリムゾンアクセント + ガラス / ぼかし / 光沢
+ * - 白基調 + 早稲田エンジのアクセント
+ * - ガラス / ぼかし / 柔らかい光で近未来的なプロダクト感
  * - モバイルファースト（小さい画面→大きい画面へ上書き）
  */
 
@@ -12,11 +12,7 @@
    CSS 変数（ブランドの色・余白・半径を一箇所で管理）
    ========================================================= */
 :root {
-  /*
-   * 早稲田エンジ（深いマルーン寄り）
-   * アプリ本体のえんじヘッダーと揃えつつ、
-   * ダークLP上でも落ち着いて見えるトーンに調整
-   */
+  /* 早稲田エンジ */
   --crimson-950: #1a070a;
   --crimson-900: #3d1018;
   --crimson-800: #5c1822;
@@ -25,32 +21,32 @@
   --crimson-500: #b42f44;
   --crimson-400: #d0445a;
 
-  /* Glow / tint — 「光として存在するエンジ」用（存在感を上げつつネオンにしない） */
-  --accent-glow: rgba(180, 47, 68, 0.55);
-  --accent-glow-mid: rgba(122, 31, 44, 0.4);
-  --accent-glow-soft: rgba(61, 16, 24, 0.32);
-  --accent-tint: rgba(180, 47, 68, 0.14);
-  --accent-tint-strong: rgba(180, 47, 68, 0.24);
-  --accent-border: rgba(180, 47, 68, 0.38);
-  --accent-text: #f0c4c9;
-  --accent-line: rgba(180, 47, 68, 0.22);
+  /* Glow / tint（白背景上でエンジが光として見える） */
+  --accent-glow: rgba(180, 47, 68, 0.28);
+  --accent-glow-mid: rgba(180, 47, 68, 0.18);
+  --accent-glow-soft: rgba(180, 47, 68, 0.1);
+  --accent-tint: rgba(180, 47, 68, 0.08);
+  --accent-tint-strong: rgba(180, 47, 68, 0.14);
+  --accent-border: rgba(180, 47, 68, 0.28);
+  --accent-text: #8f2433;
+  --accent-line: rgba(180, 47, 68, 0.16);
 
-  /* サーフェス（背景階層）— わずかに暖色寄りでエンジと馴染ませる */
-  --bg-950: #080607;
-  --bg-900: #100d0e;
-  --bg-850: #161214;
-  --bg-800: #1c1719;
-  --bg-700: #2a2225;
+  /* サーフェス（白〜薄いローズグレー） */
+  --bg-950: #ffffff;
+  --bg-900: #fbf8f9;
+  --bg-850: #f6f1f2;
+  --bg-800: #efe7e9;
+  --bg-700: #e3d6d9;
 
   /* テキスト */
-  --text-primary: #fafafa;
-  --text-secondary: #a8a4a6;
-  --text-muted: #787275;
+  --text-primary: #1a1214;
+  --text-secondary: #5c5356;
+  --text-muted: #8a7f82;
 
-  /* ガラス — ほんのりエンジを帯びた境界 */
-  --glass-bg: rgba(255, 248, 248, 0.035);
-  --glass-border: rgba(255, 200, 205, 0.1);
-  --glass-highlight: rgba(255, 210, 215, 0.16);
+  /* ガラス（ライト） */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(180, 47, 68, 0.14);
+  --glass-highlight: rgba(180, 47, 68, 0.22);
 
   /* その他 */
   --radius-sm: 10px;
@@ -80,9 +76,12 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Zen Kaku Gothic New", sans-serif;
-  /* Tailwind CDN のユーティリティより優先させるため詳細度を上げる */
   background-color: var(--bg-950) !important;
-  color: var(--text-primary);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212, 68, 90, 0.12), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #fbf8f9 45%, #f6f1f2 100%);
+  background-attachment: fixed;
+  color: var(--text-primary) !important;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
@@ -1580,4 +1579,338 @@ main,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* =========================================================
+   ライトテーマ上書き（白基調 + 早稲田エンジ）
+   トークン変更だけでは足りないハードコード色をここで揃える
+   ========================================================= */
+
+.ambient__blob {
+  filter: blur(90px);
+  opacity: 0.72;
+}
+
+.ambient__blob--1 {
+  top: -16%;
+  left: -12%;
+  background: radial-gradient(
+    circle,
+    rgba(212, 68, 90, 0.32) 0%,
+    rgba(180, 47, 68, 0.12) 45%,
+    transparent 72%
+  );
+}
+
+.ambient__blob--2 {
+  top: 18%;
+  right: -16%;
+  background: radial-gradient(
+    circle,
+    rgba(180, 47, 68, 0.2) 0%,
+    rgba(240, 180, 190, 0.24) 48%,
+    transparent 72%
+  );
+  opacity: 0.68;
+}
+
+.ambient__blob--3 {
+  bottom: 4%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(212, 140, 155, 0.3) 0%, transparent 70%);
+  opacity: 0.58;
+}
+
+.ambient__noise {
+  opacity: 0.018;
+}
+
+.brand__icon {
+  box-shadow: 0 6px 18px rgba(180, 47, 68, 0.25);
+}
+
+.site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-bottom-color: var(--accent-line);
+  box-shadow: 0 10px 30px rgba(61, 16, 24, 0.05);
+}
+
+.mobile-menu {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 16px 40px rgba(61, 16, 24, 0.08);
+}
+
+.mobile-menu__link:hover {
+  background: rgba(180, 47, 68, 0.06);
+  color: var(--crimson-700);
+}
+
+.btn--primary {
+  background: linear-gradient(165deg, #d0445a 0%, #b42f44 40%, #5c1822 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 12px 28px rgba(180, 47, 68, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.btn--primary:hover {
+  background: linear-gradient(165deg, #e0556a 0%, #d0445a 42%, #7a1f2c 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.25) inset,
+    0 16px 36px rgba(180, 47, 68, 0.42),
+    0 1px 0 rgba(255, 255, 255, 0.3) inset;
+}
+
+.btn--ghost {
+  color: var(--crimson-800);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--accent-border);
+  box-shadow: 0 4px 16px rgba(180, 47, 68, 0.08);
+}
+
+.btn--ghost:hover {
+  background: rgba(180, 47, 68, 0.08);
+  border-color: var(--crimson-500);
+  color: var(--crimson-700);
+}
+
+.section__eyebrow {
+  color: var(--crimson-600);
+  text-shadow: none;
+}
+
+.glass-panel {
+  background:
+    linear-gradient(160deg, rgba(180, 47, 68, 0.06), transparent 45%),
+    rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 18px 40px rgba(61, 16, 24, 0.07),
+    0 0 0 1px rgba(180, 47, 68, 0.04);
+}
+
+.glass-panel:hover {
+  border-color: rgba(180, 47, 68, 0.28);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 22px 48px rgba(61, 16, 24, 0.1),
+    0 0 28px rgba(180, 47, 68, 0.1);
+}
+
+.glass-panel__icon {
+  color: var(--crimson-600);
+  background: linear-gradient(160deg, rgba(180, 47, 68, 0.14), rgba(255, 240, 242, 0.9));
+  border: 1px solid var(--accent-border);
+}
+
+.hero__glow {
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(212, 68, 90, 0.28) 0%,
+    rgba(240, 170, 185, 0.22) 32%,
+    rgba(255, 220, 225, 0.16) 55%,
+    transparent 74%
+  );
+  filter: blur(28px);
+}
+
+.hero__brand-icon {
+  box-shadow: 0 10px 28px rgba(180, 47, 68, 0.22);
+}
+
+.hero__brand {
+  background: linear-gradient(180deg, var(--crimson-800) 10%, var(--crimson-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__title {
+  color: var(--text-primary);
+}
+
+.hero__perks {
+  border: 1px solid var(--accent-border);
+  background:
+    linear-gradient(160deg, rgba(180, 47, 68, 0.08), transparent 55%),
+    rgba(255, 255, 255, 0.82);
+  box-shadow: 0 12px 32px rgba(61, 16, 24, 0.06);
+}
+
+.hero__perk-icon {
+  color: var(--crimson-600);
+  background: rgba(180, 47, 68, 0.1);
+  border: 1px solid var(--accent-border);
+}
+
+/* 白背景でもスクショが埋もれないよう、暗いベゼル＋影で区切る */
+.phone-mock__frame {
+  background: linear-gradient(160deg, #2a2224 0%, #151012 50%, #0c090a 100%);
+  box-shadow:
+    0 0 0 1px rgba(180, 47, 68, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 36px 70px rgba(61, 16, 24, 0.22),
+    0 0 48px rgba(180, 47, 68, 0.16);
+}
+
+.phone-mock__reflection {
+  background: radial-gradient(ellipse, rgba(180, 47, 68, 0.28), transparent 70%);
+}
+
+.features__list {
+  border-top-color: var(--accent-line);
+}
+
+.feature-row {
+  border-bottom-color: var(--accent-line);
+}
+
+.feature-row__num {
+  color: var(--crimson-600);
+  text-shadow: none;
+}
+
+.screen-card__frame {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 245, 247, 0.9));
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 50px rgba(61, 16, 24, 0.1);
+}
+
+.screen-card__device {
+  background: linear-gradient(160deg, #2a2224 0%, #151012 50%, #0c090a 100%);
+  border: 1px solid rgba(180, 47, 68, 0.2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.1) inset,
+    0 24px 50px rgba(61, 16, 24, 0.18),
+    0 0 36px rgba(180, 47, 68, 0.12);
+}
+
+.screen-placeholder {
+  background: linear-gradient(160deg, #f8f0f2, #efe4e7 55%, #e8d9dd);
+}
+
+.screen-placeholder::before {
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(255, 255, 255, 0.35) 100%),
+    radial-gradient(circle at 30% 20%, rgba(180, 47, 68, 0.18), transparent 50%);
+}
+
+.screen-placeholder__label {
+  color: var(--crimson-700);
+}
+
+.flow-step {
+  border: 1px solid var(--accent-border);
+  background:
+    linear-gradient(165deg, rgba(180, 47, 68, 0.07), transparent 50%),
+    rgba(255, 255, 255, 0.85);
+  box-shadow: 0 14px 32px rgba(61, 16, 24, 0.06);
+}
+
+.flow-step__index {
+  background: linear-gradient(160deg, var(--crimson-400), var(--crimson-800));
+  box-shadow: 0 8px 20px rgba(180, 47, 68, 0.3);
+}
+
+.faq-item {
+  border: 1px solid var(--accent-line);
+  background:
+    linear-gradient(160deg, rgba(180, 47, 68, 0.05), transparent 45%),
+    rgba(255, 255, 255, 0.88);
+}
+
+.faq-item__q:hover {
+  background: rgba(180, 47, 68, 0.05);
+}
+
+.campaign-note {
+  border: 1px solid var(--accent-border);
+  background: rgba(180, 47, 68, 0.07);
+}
+
+.campaign-note__title {
+  color: var(--crimson-700);
+}
+
+.trust-note {
+  border: 1px solid var(--accent-line);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 24px rgba(61, 16, 24, 0.04);
+}
+
+.trust-note__title {
+  color: var(--crimson-800);
+}
+
+.signup-brand__icon {
+  box-shadow: 0 10px 28px rgba(180, 47, 68, 0.22);
+}
+
+.signup-brand__name {
+  color: var(--crimson-800);
+}
+
+.form-field__badge--required {
+  color: var(--crimson-700);
+  background: rgba(180, 47, 68, 0.1);
+  border: 1px solid var(--accent-border);
+}
+
+.form-field__input {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--accent-line);
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(61, 16, 24, 0.03);
+}
+
+.form-field__input:hover {
+  border-color: rgba(180, 47, 68, 0.35);
+}
+
+.form-field__input:focus {
+  border-color: rgba(180, 47, 68, 0.55);
+  box-shadow: 0 0 0 3px rgba(180, 47, 68, 0.14);
+  background: #fff;
+}
+
+.form-message--success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  color: #15803d;
+}
+
+.form-message--error {
+  background: rgba(180, 47, 68, 0.08);
+  border: 1px solid rgba(180, 47, 68, 0.28);
+  color: var(--crimson-700);
+}
+
+.thanks-card__icon {
+  color: var(--crimson-600);
+  background: linear-gradient(160deg, rgba(180, 47, 68, 0.14), rgba(255, 245, 247, 0.95));
+  border: 1px solid var(--accent-border);
+  box-shadow: 0 10px 28px rgba(180, 47, 68, 0.18);
+}
+
+.thanks-card__title {
+  color: var(--text-primary);
+}
+
+.site-footer {
+  border-top: 1px solid var(--accent-line);
+  background: linear-gradient(180deg, transparent, rgba(180, 47, 68, 0.04));
+}
+
+.glass-panel--lg {
+  background:
+    linear-gradient(165deg, rgba(180, 47, 68, 0.07), transparent 40%),
+    rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--accent-border);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 24px 60px rgba(61, 16, 24, 0.08);
 }
