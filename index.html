@@ -76,8 +76,8 @@
   </script>
 
   <!-- カスタムCSSは Tailwind より後・キャッシュバス付きで読み込み -->
-  <link rel="stylesheet" href="./css/style.css?v=20260729form" />
-  <link rel="stylesheet" href="./css/animation.css?v=20260729form" />
+  <link rel="stylesheet" href="./css/style.css?v=20260729form2" />
+  <link rel="stylesheet" href="./css/animation.css?v=20260729form2" />
 </head>
 
 <body class="antialiased overflow-x-hidden">
@@ -500,17 +500,18 @@
                   />
                 </span>
                 <p class="signup-brand__name font-display">WaseWase</p>
-                <p class="signup-brand__tagline">早稲田生限定SNSの公式事前登録</p>
-              </div>
-
-              <div class="section__header section__header--center signup__header">
-                <p class="section__eyebrow">Early Access</p>
-                <h2 id="signup-heading" class="section__title">事前登録する</h2>
+                <p class="signup-brand__eyebrow">Early Access</p>
+                <h2 id="signup-heading" class="signup-brand__headline">
+                  早稲田生限定SNSを誰よりも早く始めよう
+                </h2>
               </div>
 
               <!-- 安心感をまとめたコンパクト案内 -->
               <div class="trust-note">
-                <p class="trust-note__title">🔒 約30秒で登録完了</p>
+                <p class="trust-note__title">
+                  <span class="trust-note__icon" aria-hidden="true">🔒</span>
+                  <span class="trust-note__highlight">約30秒で登録完了</span>
+                </p>
                 <ul class="trust-note__list">
                   <li>入力情報はわせわせ運営のみが管理します</li>
                   <li>リリースのお知らせ以外には利用しません</li>
@@ -664,8 +665,7 @@
 
         <!-- キャンペーン案内（入力の流れを妨げないようフォーム外） -->
         <aside class="campaign-card glass-panel reveal reveal--up" data-reveal aria-labelledby="campaign-heading">
-          <p class="campaign-card__eyebrow">Campaign</p>
-          <h3 id="campaign-heading" class="campaign-card__title">🎁 事前登録期間限定キャンペーン</h3>
+          <h3 id="campaign-heading" class="campaign-card__title">🎁 キャンペーン</h3>
           <ul class="campaign-card__list">
             <li>友達を招待するほど、Amazonギフトカード抽選の当選確率がアップ</li>
             <li>招待数ランキング上位3名には、Amazonギフトカードを確定プレゼント</li>
