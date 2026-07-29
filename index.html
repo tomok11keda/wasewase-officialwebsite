@@ -76,8 +76,8 @@
   </script>
 
   <!-- カスタムCSSは Tailwind より後・キャッシュバス付きで読み込み -->
-  <link rel="stylesheet" href="./css/style.css?v=20260729campus" />
-  <link rel="stylesheet" href="./css/animation.css?v=20260729campus" />
+  <link rel="stylesheet" href="./css/style.css?v=20260729form" />
+  <link rel="stylesheet" href="./css/animation.css?v=20260729form" />
 </head>
 
 <body class="antialiased overflow-x-hidden">
@@ -500,26 +500,20 @@
                   />
                 </span>
                 <p class="signup-brand__name font-display">WaseWase</p>
-                <p class="signup-brand__tagline">
-                  早稲田生限定SNS「わせわせ」の公式事前登録です。<br />
-                  早稲田メール認証は、安心できる学生だけのコミュニティをつくるために行います。
-                </p>
+                <p class="signup-brand__tagline">早稲田生限定SNSの公式事前登録</p>
               </div>
 
-              <div class="section__header section__header--center">
+              <div class="section__header section__header--center signup__header">
                 <p class="section__eyebrow">Early Access</p>
                 <h2 id="signup-heading" class="section__title">事前登録する</h2>
-                <p class="section__desc">
-                  事前登録は約30秒で完了します。<br />
-                  リリース時のお知らせをお届けするために、必要な情報だけ入力してください。
-                </p>
               </div>
 
-              <!-- 安心感を伝えるプライバシー案内 -->
+              <!-- 安心感をまとめたコンパクト案内 -->
               <div class="trust-note">
-                <p class="trust-note__title">🔒 入力情報は第三者に公開されません</p>
+                <p class="trust-note__title">🔒 約30秒で登録完了</p>
                 <ul class="trust-note__list">
-                  <li>早稲田生限定サービスの準備のためにのみ利用します</li>
+                  <li>入力情報はわせわせ運営のみが管理します</li>
+                  <li>リリースのお知らせ以外には利用しません</li>
                   <li>不要な個人情報は収集しません</li>
                 </ul>
               </div>
@@ -528,21 +522,18 @@
                 <!-- ① ニックネーム（必須） -->
                 <div class="form-field">
                   <label for="nickname" class="form-field__label">
-                    ニックネーム
-                    <span class="form-field__badge form-field__badge--required">必須</span>
+                    ニックネーム<span class="form-field__req" aria-hidden="true">*</span>
                   </label>
-                  <p class="form-field__hint">
-                    招待数ランキングの発表など、公開される場面で使う名前です。<br />
-                    本名ではなく、公開されても問題ないニックネームで大丈夫です。
-                  </p>
                   <input
                     type="text"
                     id="nickname"
                     name="nickname"
                     class="form-field__input"
-                    placeholder="わせたろう"
+                    placeholder="例：わせたろう"
                     autocomplete="nickname"
                     maxlength="80"
+                    required
+                    aria-required="true"
                   />
                   <p class="form-field__error" data-error-for="nickname" hidden></p>
                 </div>
@@ -550,22 +541,19 @@
                 <!-- ② Instagram ID（必須） -->
                 <div class="form-field">
                   <label for="instagram" class="form-field__label">
-                    Instagram ID
-                    <span class="form-field__badge form-field__badge--required">必須</span>
+                    Instagram ID<span class="form-field__req" aria-hidden="true">*</span>
                   </label>
-                  <p class="form-field__hint">
-                    リリースのお知らせやキャンペーン管理に使用します。<br />
-                    第三者には公開されません。
-                  </p>
                   <input
                     type="text"
                     id="instagram"
                     name="instagram"
                     class="form-field__input"
-                    placeholder="@waseda_taro"
+                    placeholder="例：@waseda_taro"
                     autocomplete="username"
                     maxlength="80"
                     spellcheck="false"
+                    required
+                    aria-required="true"
                   />
                   <p class="form-field__error" data-error-for="instagram" hidden></p>
                 </div>
@@ -573,48 +561,33 @@
                 <!-- ③ 紹介者（任意） -->
                 <div class="form-field">
                   <label for="referrer" class="form-field__label">
-                    紹介してくれた人のInstagram ID または早稲田メールアドレス
-                    <span class="form-field__badge form-field__badge--optional">任意</span>
+                    紹介者
+                    <span class="form-field__optional">任意</span>
                   </label>
-                  <p class="form-field__hint">
-                    「わせわせ」を教えてくれた友人がいれば入力してください。<br />
-                    入力すると、その方のキャンペーン特典につながります。いない場合は空欄のままでOKです。
-                  </p>
-                  <div class="campaign-note">
-                    <p class="campaign-note__title">🎁 事前登録期間限定キャンペーン</p>
-                    <ul class="campaign-note__list">
-                      <li>友達を招待するほど、Amazonギフトカード抽選の当選確率がアップ</li>
-                      <li>さらに、招待数ランキング上位3名にはAmazonギフトカードを確定プレゼント</li>
-                    </ul>
-                  </div>
                   <input
                     type="text"
                     id="referrer"
                     name="referrer"
                     class="form-field__input"
-                    placeholder="@friend または friend@akane.waseda.jp"
+                    placeholder="例：@friend"
                     maxlength="120"
                     spellcheck="false"
                   />
                   <p class="form-field__error" data-error-for="referrer" hidden></p>
                 </div>
 
-                <!-- ④ 早稲田大学メールアドレス（任意） -->
+                <!-- ④ 早稲田メール（任意） -->
                 <div class="form-field">
                   <label for="wasedaEmail" class="form-field__label">
-                    早稲田大学メールアドレス
-                    <span class="form-field__badge form-field__badge--optional">任意</span>
+                    早稲田メール
+                    <span class="form-field__optional">任意</span>
                   </label>
-                  <p class="form-field__hint">
-                    あると、リリース後の学生認証やご連絡がスムーズになります。<br />
-                    任意です。第三者には公開されません。
-                  </p>
                   <input
                     type="email"
                     id="wasedaEmail"
                     name="wasedaEmail"
                     class="form-field__input"
-                    placeholder="example@akane.waseda.jp"
+                    placeholder="例：example@akane.waseda.jp"
                     autocomplete="email"
                     maxlength="120"
                   />
@@ -625,8 +598,6 @@
                   <span class="btn__label">登録する</span>
                   <span class="btn__loading" hidden aria-hidden="true">送信中…</span>
                 </button>
-
-                <p class="signup-form__note">必須は2項目だけ。送信内容はサービス運営のためにのみ使用します。</p>
 
                 <!-- 失敗時メッセージ（成功時はサンクスカードを表示） -->
                 <div id="form-message" class="form-message" role="status" aria-live="polite" hidden></div>
@@ -690,6 +661,16 @@
           </div>
 
         </div>
+
+        <!-- キャンペーン案内（入力の流れを妨げないようフォーム外） -->
+        <aside class="campaign-card glass-panel reveal reveal--up" data-reveal aria-labelledby="campaign-heading">
+          <p class="campaign-card__eyebrow">Campaign</p>
+          <h3 id="campaign-heading" class="campaign-card__title">🎁 事前登録期間限定キャンペーン</h3>
+          <ul class="campaign-card__list">
+            <li>友達を招待するほど、Amazonギフトカード抽選の当選確率がアップ</li>
+            <li>招待数ランキング上位3名には、Amazonギフトカードを確定プレゼント</li>
+          </ul>
+        </aside>
       </div>
     </section>
 
