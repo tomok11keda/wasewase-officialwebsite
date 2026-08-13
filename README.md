@@ -1,6 +1,6 @@
-# わせわせ（WaseWase）公式サイト
+# わせわせ（wasewase）公式サイト
 
-早稲田大学生限定SNS「わせわせ」のランディングページです。
+早稲田大学生限定のキャンパスアプリ「わせわせ」のランディングページです。
 
 現在は**事前登録**向け。正式リリース後は、設定を1箇所変えるだけで **App Store 導線**に切り替えられます。
 
@@ -9,9 +9,10 @@
 ## 技術スタック
 
 - HTML
-- Tailwind CSS（CDN）
+- CSS
 - Vanilla JavaScript
-- Google Apps Script（フォーム送信・接続予定）
+- Google Apps Script（フォーム送信）
+- Google Fonts（Noto Sans JP。Hiragino 系が無い環境向け）
 
 フレームワーク（React / Next.js など）は使用していません。
 
@@ -24,14 +25,14 @@
 ├── index.html
 ├── css/
 │   ├── style.css        # デザインシステム本体
-│   └── animation.css    # スクロールアニメーション
+│   └── animation.css    # 控えめな入場アニメーション
 ├── js/
 │   ├── main.js          # ヘッダー・メニュー・サイトモード切替
 │   ├── animation.js     # Intersection Observer
 │   └── form.js          # 事前登録フォーム
 ├── assets/
-│   ├── images/          # OGP・スクショなど
-│   ├── icons/           # favicon など
+│   ├── images/          # アプリスクショ
+│   ├── icons/           # ロゴ
 │   └── videos/
 └── README.md
 ```
@@ -93,37 +94,13 @@ const SITE_CONFIG = {
 
 ※ HTML 上の入力名 `wasedaEmail` の値は、GAS へは `email` キーで送ります。
 
-### GAS 側の例（スプレッドシートに追記）
-
-```js
-function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  sheet.appendRow([
-    new Date(),
-    data.nickname || "",
-    data.instagram || "",
-    data.referrer || "",
-    data.email || "",
-  ]);
-  return ContentService
-    .createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-```
-
-デプロイ時は「アクセスできるユーザー: 全員」にしてください。
 送信成功時のみサンクスカードが表示されます。
 
 ---
 
 ## SEO / OGP
 
-`index.html` の `<head>` に以下を設定済みです。
-
-- title / description
-- OGP / Twitter Card
-- favicon 用コメント（画像を置いたらコメント解除）
+`index.html` の `<head>` に title / description / OGP / Twitter Card を設定しています。
 
 本番ドメインに合わせて、`og:url` や `og:image` の URL を書き換えてください。
 
@@ -135,18 +112,22 @@ function doPost(e) {
 
 ---
 
-## デザインについて
+## デザイン
 
-- ベース: ダークサーフェス + 白 / グレー
-- アクセント: 早稲田クリムゾン `#5A1818` `#7A1F1F` `#A02222` `#D52B2B`
-- 表現: ガラス、ぼかし、グラデーション、控えめな Glow
-- 参考トーン: Apple / Linear / Vercel / Arc / Raycast
+アプリ UI に合わせたライトテーマです。
+
+- Primary: `#891E2B`
+- Background: `#F7F9FC`
+- Surface: `#FFFFFF`
+- Text: `#0F1419`
+- 日本語フォント: Hiragino Sans / Noto Sans JP
+- CTA は pill（`border-radius: 999px`）
 
 ---
 
 ## 今後の拡張アイデア
 
-- 実機スクリーンショットへの差し替え（`#screens`）
+- 時間割など、未収録スクリーンショットの追加
 - favicon / OGP 画像の追加
 - プライバシーポリシー・利用規約ページ
-- App Store バッジ画像の追加
+- 公式 Instagram URL の設定（`js/form.js` の `INSTAGRAM_URL`）

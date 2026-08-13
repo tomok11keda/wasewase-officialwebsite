@@ -1,24 +1,13 @@
 /**
  * animation.css
- * スクロール連動アニメーション用スタイル
- *
- * 仕組み:
- * 1. 初期状態: .reveal に opacity:0 と少しの変形
- * 2. Intersection Observer が要素を検知
- * 3. .is-visible を付与 → ふわっと表示
- *
- * 派手にしない・短く・滑らか（transform / opacity のみ）が方針です。
+ * 控えめな入場アニメーションのみ
  */
 
-/* ---------------------------------------------------------
-   共通の初期状態
-   --------------------------------------------------------- */
 .reveal {
   opacity: 0;
-  will-change: transform, opacity;
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.5s ease,
+    transform 0.5s ease;
   transition-delay: var(--reveal-delay, 0ms);
 }
 
@@ -27,96 +16,30 @@
   transform: none;
 }
 
-/* ---------------------------------------------------------
-   バリエーション
-   --------------------------------------------------------- */
-
-/* ふわっとフェード */
 .reveal--fade {
   transform: none;
 }
 
-/* 下からスライド */
 .reveal--up {
-  transform: translateY(28px);
+  transform: translateY(16px);
 }
 
-/* 左から */
-.reveal--left {
-  transform: translateX(-32px);
+@media (min-width: 960px) {
+  .hero .device:nth-child(2) {
+    animation: device-float 5.5s ease-in-out infinite;
+  }
 }
 
-/* 右から */
-.reveal--right {
-  transform: translateX(32px);
-}
-
-/* 少しだけ拡大しながら出現 */
-.reveal--scale {
-  transform: scale(0.96) translateY(16px);
-}
-
-/* ---------------------------------------------------------
-   ヒーロー入場（初回ロード時）
-   JS 側でも data-reveal を使うが、ヒーローは少し長めに
-   --------------------------------------------------------- */
-.hero .reveal {
-  transition-duration: 0.9s;
-}
-
-/* ---------------------------------------------------------
-   環境光のゆっくりした動き（装飾・控えめ）
-   --------------------------------------------------------- */
-@keyframes ambient-drift {
+@keyframes device-float {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translateY(-4px);
   }
   50% {
-    transform: translate(3%, 4%) scale(1.05);
+    transform: translateY(-12px);
   }
 }
 
-.ambient__blob--1 {
-  animation: ambient-drift 18s ease-in-out infinite;
-}
-
-.ambient__blob--2 {
-  animation: ambient-drift 22s ease-in-out infinite reverse;
-}
-
-.ambient__blob--3 {
-  animation: ambient-drift 26s ease-in-out infinite;
-}
-
-/* ---------------------------------------------------------
-   プライマリボタンの微かな光沢（ホバー時以外も存在感）
-   --------------------------------------------------------- */
-@keyframes soft-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 1px rgba(255, 200, 210, 0.12) inset,
-      0 12px 30px rgba(84, 24, 33, 0.48),
-      0 0 28px rgba(161, 44, 60, 0.24),
-      0 1px 0 rgba(255, 255, 255, 0.1) inset;
-  }
-  50% {
-    box-shadow:
-      0 0 0 1px rgba(255, 200, 210, 0.18) inset,
-      0 16px 36px rgba(110, 31, 42, 0.55),
-      0 0 36px rgba(161, 44, 60, 0.32),
-      0 1px 0 rgba(255, 255, 255, 0.14) inset;
-  }
-}
-
-.hero .btn--primary {
-  animation: soft-pulse 4s ease-in-out infinite;
-}
-
-/* ---------------------------------------------------------
-   prefers-reduced-motion
-   --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
@@ -124,10 +47,7 @@
     transition: none;
   }
 
-  .ambient__blob--1,
-  .ambient__blob--2,
-  .ambient__blob--3,
-  .hero .btn--primary {
+  .hero .device:nth-child(2) {
     animation: none;
   }
 }

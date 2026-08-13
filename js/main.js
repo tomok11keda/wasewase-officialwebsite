@@ -84,13 +84,13 @@
 
     // フッターの「事前登録」リンク文言も同期
     document.querySelectorAll('.site-footer__nav [data-cta="primary"]').forEach((el) => {
-      el.textContent = mode === "appstore" ? "ダウンロード" : "事前登録";
+      el.textContent = mode === "appstore" ? "ダウンロード" : "事前登録する";
     });
 
     // ヒーロー主CTA（長め文言）をモードに合わせて更新
     document.querySelectorAll("[data-cta-hero]").forEach((el) => {
       el.textContent =
-        mode === "appstore" ? "App Store で入手" : "無料で事前登録する";
+        mode === "appstore" ? "App Store で入手" : "事前登録する";
       if (mode === "appstore") {
         el.setAttribute("href", "#signup");
       }
