@@ -473,8 +473,12 @@ input {
 }
 
 .device img {
+  display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 390 / 848;
+  object-fit: contain;
+  object-position: top center;
   border-radius: 20px;
   background: var(--bg);
 }
@@ -654,30 +658,67 @@ input {
   color: var(--muted);
 }
 
-.feature-block__device {
+.feature-block__device,
+.feature-block__devices {
   margin: 0;
   display: flex;
   justify-content: center;
+  gap: 12px;
 }
 
-.feature-block__device .device {
+.feature-block__devices {
+  flex-wrap: wrap;
+}
+
+.feature-block__device .device,
+.feature-block__devices .device {
   flex: 0 0 auto;
-  width: min(240px, 72vw);
+  width: min(220px, 42vw);
   padding: 0;
   background: transparent;
   border: 0;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.feature-block__device .device {
+  width: min(240px, 72vw);
   border-radius: 24px;
   overflow: hidden;
   box-shadow: var(--shadow-device);
 }
 
-.feature-block__device .device img {
+.feature-block__devices .device img {
+  border-radius: 24px;
+  box-shadow: var(--shadow-device);
+}
+
+.feature-block__device .device img,
+.feature-block__devices .device img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 0;
-  background: transparent;
+  aspect-ratio: 390 / 848;
   object-fit: contain;
+  object-position: top center;
+  background: #fff;
+}
+
+.feature-block__device .device img {
+  border-radius: 0;
+}
+
+.feature-block__devices .device figcaption {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.feature-block__copy .feature-sublist {
+  margin-top: 16px;
 }
 
 .feature-panel {
@@ -810,6 +851,18 @@ input {
 
   .feature-block--reverse .feature-block__copy {
     order: 2;
+  }
+
+  .feature-block--pair {
+    grid-template-columns: 1fr minmax(280px, 460px);
+  }
+
+  .feature-block--pair .feature-block__devices {
+    justify-content: flex-end;
+  }
+
+  .feature-block--pair .feature-block__devices .device {
+    width: min(210px, 100%);
   }
 
   .feature-block h3,
