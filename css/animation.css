@@ -48,7 +48,8 @@
 }
 
 @media (min-width: 960px) {
-  .phone--main {
+  .phone--main,
+  .phone--hero-main {
     animation: phone-float 6.5s ease-in-out infinite;
   }
 }
