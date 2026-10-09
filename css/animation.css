@@ -1,6 +1,6 @@
 /**
  * animation.css
- * 控えめな入場アニメーションのみ
+ * 控えめな入場アニメーション + Hero 試作モーション
  */
 
 .reveal {
@@ -24,19 +24,42 @@
   transform: translateY(16px);
 }
 
-@media (min-width: 960px) {
-  .hero .device:nth-child(2) {
-    animation: device-float 5.5s ease-in-out infinite;
+/* Hero enter — keep transforms on phones intact (animate opacity only) */
+.hero__copy > * {
+  animation: hero-fade-up 0.85s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.hero__eyebrow { animation-delay: 0.05s; }
+.hero__title { animation-delay: 0.14s; }
+.hero__lead { animation-delay: 0.24s; }
+.hero__actions { animation-delay: 0.34s; }
+.hero__store-note { animation-delay: 0.4s; }
+.hero__facts { animation-delay: 0.46s; }
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes device-float {
+@media (min-width: 960px) {
+  .phone--main {
+    animation: phone-float 6.5s ease-in-out infinite;
+  }
+}
+
+@keyframes phone-float {
   0%,
   100% {
-    transform: translateY(-4px);
+    transform: translate(-50%, calc(-50% - 4px));
   }
   50% {
-    transform: translateY(-12px);
+    transform: translate(-50%, calc(-50% - 14px));
   }
 }
 
@@ -47,7 +70,14 @@
     transition: none;
   }
 
-  .hero .device:nth-child(2) {
-    animation: none;
+  .hero__copy > *,
+  .phone--main {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .phone--main {
+    transform: translate(-50%, -50%) !important;
   }
 }

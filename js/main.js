@@ -27,7 +27,8 @@
    */
   const SITE_CONFIG = {
     mode: "preregister", // "preregister" | "appstore"
-    appStoreUrl: "https://apps.apple.com/", // 正式な URL に差し替え
+    // 正式な App Store URL が確認できるまで未設定（ルートや仮URLは使わない）
+    appStoreUrl: "",
     ctaLabels: {
       preregister: "事前登録する",
       appstore: "App Store で入手",
@@ -36,10 +37,37 @@
 
   function init() {
     applySiteMode(SITE_CONFIG);
+    initPendingStoreCtas();
     initHeaderScroll();
     initMobileMenu();
     initSmoothAnchorClose();
     setFooterYear();
+  }
+
+  /**
+   * Hero / Header の App Store CTA
+   * 正式 URL 未設定時は遷移させず、設定後は target=_blank で開く
+   */
+  function initPendingStoreCtas() {
+    const url = (SITE_CONFIG.appStoreUrl || "").trim();
+    const links = document.querySelectorAll("[data-store-cta]");
+
+    links.forEach((link) => {
+      if (url && /^https:\/\/apps\.apple\.com\//.test(url)) {
+        link.setAttribute("href", url);
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", "noopener noreferrer");
+        link.removeAttribute("data-appstore-pending");
+        link.removeAttribute("aria-disabled");
+      } else {
+        link.setAttribute("href", "#");
+        link.setAttribute("data-appstore-pending", "");
+        link.setAttribute("aria-disabled", "true");
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+        });
+      }
+    });
   }
 
   /**
@@ -72,10 +100,15 @@
       }
     });
 
-    // App Store リンク
+    // 既存の signup 内 App Store リンク（Hero/Header の data-store-cta とは別）
     const storeLinks = document.querySelectorAll("[data-appstore-link]");
     storeLinks.forEach((link) => {
-      link.setAttribute("href", config.appStoreUrl);
+      const url = (config.appStoreUrl || "").trim();
+      if (url && /^https:\/\/apps\.apple\.com\//.test(url)) {
+        link.setAttribute("href", url);
+      } else {
+        link.setAttribute("href", "#");
+      }
       if (mode === "appstore") {
         link.setAttribute("target", "_blank");
         link.setAttribute("rel", "noopener noreferrer");
@@ -85,15 +118,6 @@
     // フッターの「事前登録」リンク文言も同期
     document.querySelectorAll('.site-footer__nav [data-cta="primary"]').forEach((el) => {
       el.textContent = mode === "appstore" ? "ダウンロード" : "事前登録する";
-    });
-
-    // ヒーロー主CTA（長め文言）をモードに合わせて更新
-    document.querySelectorAll("[data-cta-hero]").forEach((el) => {
-      el.textContent =
-        mode === "appstore" ? "App Store で入手" : "事前登録する";
-      if (mode === "appstore") {
-        el.setAttribute("href", "#signup");
-      }
     });
   }
 
