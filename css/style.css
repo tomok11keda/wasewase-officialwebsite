@@ -29,6 +29,10 @@
   --shadow-phone:
     0 2px 8px rgba(20, 16, 24, 0.06),
     0 24px 48px rgba(20, 16, 24, 0.12);
+  --phone-aspect: 900 / 1957;
+  --phone-radius: 36px;
+  --phone-bezel: 3px;
+  --phone-frame: #1a1518;
 
   --header-h: 56px;
   --max-w: 1200px;
@@ -626,76 +630,75 @@ input {
   z-index: 0;
 }
 
-.phone {
+/* Unified phone chrome: screen-only images + CSS frame/radius/shadow */
+.phone-mock {
+  --_radius: var(--phone-radius);
+  --_bezel: var(--phone-bezel);
   margin: 0;
-  position: absolute;
-  overflow: hidden;
-  background: #f4f2f3;
-  border: 1px solid rgba(15, 20, 25, 0.06);
-  border-radius: 28px;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--phone-aspect);
+  border-radius: var(--_radius);
+  background: var(--phone-frame);
+  padding: var(--_bezel);
   box-shadow: var(--shadow-phone);
-  aspect-ratio: 390 / 848;
-  z-index: 1;
+  overflow: hidden;
+  line-height: 0;
+  isolation: isolate;
 }
 
-.phone img {
-  position: absolute;
-  inset: 0;
+.phone-mock img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  background: #f4f2f3;
+  border-radius: calc(var(--_radius) - var(--_bezel));
+  background: #f7f2f3;
 }
 
-/* App Store素材から切り出した端末（既にベゼル込み） */
-.phone--framed {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  aspect-ratio: auto;
+.phone-stage .phone-mock {
+  position: absolute;
+  z-index: 1;
 }
 
-.phone--framed img {
-  position: relative;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 36px rgba(20, 16, 24, 0.18));
-  background: transparent;
-  border-radius: 0;
-}
-
-.phone--main {
+.phone-mock--main {
   z-index: 3;
   width: min(62%, 240px);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 32px;
+  --_radius: 38px;
 }
 
-.phone--hero-main {
-  width: min(68%, 260px);
-}
-
-.phone--side {
+.phone-mock--side {
   z-index: 1;
   width: min(46%, 168px);
   top: 54%;
+  --_radius: 32px;
 }
 
-.phone--left {
+.phone-mock--left {
   left: 0;
   transform: translateY(-50%) rotate(-8deg) scale(0.92);
 }
 
-.phone--right {
+.phone-mock--right {
   right: 0;
   left: auto;
   transform: translateY(-46%) rotate(8deg) scale(0.92);
+}
+
+.phone-mock--lg {
+  width: min(100%, 320px);
+  --_radius: 38px;
+}
+
+.phone-mock--back,
+.phone-mock--front,
+.phone-mock--offset {
+  --_radius: 34px;
 }
 
 @media (min-width: 480px) {
@@ -711,12 +714,11 @@ input {
     height: 520px;
   }
 
-  .phone--main,
-  .phone--hero-main {
+  .phone-mock--main {
     width: 270px;
   }
 
-  .phone--side {
+  .phone-mock--side {
     width: 190px;
   }
 }
@@ -774,22 +776,22 @@ input {
     margin-left: auto;
   }
 
-  .phone--main,
-  .phone--hero-main {
+  .phone-mock--main {
     width: 300px;
-    border-radius: 36px;
+    --_radius: 40px;
   }
 
-  .phone--side {
+  .phone-mock--side {
     width: 220px;
+    --_radius: 34px;
   }
 
-  .phone--left {
+  .phone-mock--left {
     left: 2%;
     top: 58%;
   }
 
-  .phone--right {
+  .phone-mock--right {
     right: 0;
     top: 48%;
   }
@@ -802,12 +804,11 @@ input {
     max-width: 640px;
   }
 
-  .phone--main,
-  .phone--hero-main {
+  .phone-mock--main {
     width: 320px;
   }
 
-  .phone--side {
+  .phone-mock--side {
     width: 240px;
   }
 }
@@ -1764,24 +1765,6 @@ input {
   min-width: 0;
 }
 
-.shot {
-  margin: 0;
-  border-radius: 28px;
-  overflow: hidden;
-  background: #f3eef0;
-  box-shadow: var(--shadow-phone);
-  line-height: 0;
-}
-
-.shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  vertical-align: top;
-  object-fit: cover;
-  object-position: top center;
-}
-
 /* Stacked pair (timetable + course) */
 .showcase__visual--stack {
   position: relative;
@@ -1791,13 +1774,13 @@ input {
   padding-bottom: 8%;
 }
 
-.showcase__visual--stack .shot {
+.showcase__visual--stack .phone-mock {
   position: relative;
   width: 72%;
   margin: 0;
 }
 
-.showcase__visual--stack .shot--back {
+.showcase__visual--stack .phone-mock--back {
   position: absolute;
   left: 0;
   top: 14%;
@@ -1806,14 +1789,13 @@ input {
   z-index: 1;
 }
 
-.showcase__visual--stack .shot--front {
+.showcase__visual--stack .phone-mock--front {
   position: relative;
   margin-left: auto;
   width: 66%;
   z-index: 2;
   transform: rotate(2.5deg);
 }
-
 
 /* Duo social */
 .showcase--social {
@@ -1829,14 +1811,9 @@ input {
   align-items: end;
 }
 
-.showcase__visual--duo .shot {
-  border-radius: 22px;
-}
-
-.showcase__visual--duo .shot--offset {
+.showcase__visual--duo .phone-mock--offset {
   transform: translateY(-18px);
 }
-
 
 /* Focus large */
 .showcase--focus {
@@ -1848,11 +1825,9 @@ input {
   justify-content: center;
 }
 
-.shot--large {
+.showcase__visual--focus .phone-mock--lg {
   width: min(100%, 320px);
-  border-radius: 32px;
 }
-
 
 /* Market panel */
 .showcase--market {
@@ -1869,6 +1844,10 @@ input {
   background:
     radial-gradient(circle at 30% 20%, rgba(137, 30, 43, 0.1), transparent 50%),
     linear-gradient(160deg, #f8f1f3 0%, #fff 70%);
+}
+
+.showcase__visual--panel .phone-mock--lg {
+  width: min(100%, 320px);
 }
 
 @media (min-width: 768px) {
@@ -1898,7 +1877,8 @@ input {
     margin-right: 0;
   }
 
-  .shot--large {
+  .showcase__visual--focus .phone-mock--lg,
+  .showcase__visual--panel .phone-mock--lg {
     width: min(100%, 360px);
   }
 }
@@ -1912,7 +1892,7 @@ input {
     gap: 20px;
   }
 
-  .showcase__visual--duo .shot--offset {
+  .showcase__visual--duo .phone-mock--offset {
     transform: translateY(-28px);
   }
 }

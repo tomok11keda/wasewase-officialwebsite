@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>QA — 画面切り抜き一覧（わせわせ LP）</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <style>
+    body {
+      background: #f0ecee;
+      padding: 24px 16px 64px;
+    }
+    .qa {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .qa h1 {
+      margin: 0 0 8px;
+      font-size: 1.5rem;
+    }
+    .qa__note {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 0.9375rem;
+    }
+    .qa__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 28px 20px;
+    }
+    .qa__card h2 {
+      margin: 0 0 6px;
+      font-size: 0.95rem;
+    }
+    .qa__meta {
+      margin: 0 0 12px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .qa__card .phone-mock {
+      width: min(100%, 240px);
+      margin: 0 auto;
+    }
+    .qa__raw {
+      margin-top: 12px;
+      border: 1px dashed #c9b8bc;
+      background: #fff;
+      padding: 8px;
+    }
+    .qa__raw img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .qa__raw figcaption {
+      margin-top: 6px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .qa__back {
+      display: inline-block;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <main class="qa">
+    <a class="qa__back" href="./index.html">← LPへ戻る</a>
+    <h1>画面切り抜き QA</h1>
+    <p class="qa__note">
+      各画像はベゼルなしの画面領域のみ。端末の角丸・細いフレーム・影は共通の
+      <code>.phone-mock</code> で再現しています。本番前の一時確認用です。
+    </p>
+
+    <div class="qa__grid">
+      <article class="qa__card">
+        <h2>Hero中央 — コミュニティ</h2>
+        <p class="qa__meta">screens/community.jpg · 900×1957 · ヘッダー〜下部タブ完備</p>
+        <figure class="phone-mock">
+          <img src="./assets/images/screens/community.jpg" alt="コミュニティ" width="900" height="1957" />
+        </figure>
+        <figure class="qa__raw">
+          <img src="./assets/images/screens/community.jpg" alt="" />
+          <figcaption>生画像（角丸なし）</figcaption>
+        </figure>
+      </article>
+
+      <article class="qa__card">
+        <h2>Hero左 — タイムライン</h2>
+        <p class="qa__meta">screens/timeline.jpg · 900×1957 · ヘッダー〜下部タブ完備</p>
+        <figure class="phone-mock">
+          <img src="./assets/images/screens/timeline.jpg" alt="タイムライン" width="900" height="1957" />
+        </figure>
+        <figure class="qa__raw">
+          <img src="./assets/images/screens/timeline.jpg" alt="" />
+          <figcaption>生画像（角丸なし）</figcaption>
+        </figure>
+      </article>
+
+      <article class="qa__card">
+        <h2>Hero右 — 時間割</h2>
+        <p class="qa__meta">screens/timetable.jpg · 900×1957 · ヘッダー〜下部タブ完備</p>
+        <figure class="phone-mock">
+          <img src="./assets/images/screens/timetable.jpg" alt="時間割" width="900" height="1957" />
+        </figure>
+        <figure class="qa__raw">
+          <img src="./assets/images/screens/timetable.jpg" alt="" />
+          <figcaption>生画像（角丸なし）</figcaption>
+        </figure>
+      </article>
+
+      <article class="qa__card">
+        <h2>授業詳細・レビュー</h2>
+        <p class="qa__meta">screens/course.jpg · 900×1957 · ヘッダー〜下部タブ完備</p>
+        <figure class="phone-mock">
+          <img src="./assets/images/screens/course.jpg" alt="授業詳細" width="900" height="1957" />
+        </figure>
+        <figure class="qa__raw">
+          <img src="./assets/images/screens/course.jpg" alt="" />
+          <figcaption>生画像（角丸なし）</figcaption>
+        </figure>
+      </article>
+
+      <article class="qa__card">
+        <h2>メッセージ</h2>
+        <p class="qa__meta">screens/messages.jpg · 900×1957（元 853×1844 を幅合わせ＋下端延長）</p>
+        <figure class="phone-mock">
+          <img src="./assets/images/screens/messages.jpg" alt="メッセージ" width="900" height="1957" />
+        </figure>
+        <figure class="qa__raw">
+          <img src="./assets/images/screens/messages.jpg" alt="" />
+          <figcaption>生画像（角丸なし）</figcaption>
+        </figure>
+      </article>
+
+      <article class="qa__card">
+        <h2>フリマ</h2>
+        <p class="qa__meta">screens/fleamarket.jpg · 900×1957 · ヘッダー〜下部タブ完備</p>
+        <figure class="phone-mock">
+          <img src="./assets/images/screens/fleamarket.jpg" alt="フリマ" width="900" height="1957" />
+        </figure>
+        <figure class="qa__raw">
+          <img src="./assets/images/screens/fleamarket.jpg" alt="" />
+          <figcaption>生画像（角丸なし）</figcaption>
+        </figure>
+      </article>
+    </div>
+  </main>
+</body>
+</html>
