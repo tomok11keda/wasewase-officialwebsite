@@ -606,14 +606,15 @@ input {
 
 .phone-stage {
   position: relative;
-  width: min(100%, 380px);
-  height: 460px;
+  width: min(100%, 360px);
+  /* Tall enough for full phone aspect (900/1957) + side tilt */
+  height: 540px;
   margin: 0 auto;
 }
 
 .phone-stage--hero {
-  width: min(100%, 420px);
-  height: 500px;
+  width: min(100%, 400px);
+  height: 560px;
 }
 
 .phone-stage__glow {
@@ -665,7 +666,7 @@ input {
 
 .phone-mock--main {
   z-index: 3;
-  width: min(62%, 240px);
+  width: min(58%, 220px);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -674,7 +675,7 @@ input {
 
 .phone-mock--side {
   z-index: 1;
-  width: min(46%, 168px);
+  width: min(42%, 150px);
   top: 54%;
   --_radius: 32px;
 }
@@ -711,15 +712,15 @@ input {
   .phone-stage,
   .phone-stage--hero {
     width: min(100%, 480px);
-    height: 520px;
+    height: 600px;
   }
 
   .phone-mock--main {
-    width: 270px;
+    width: 250px;
   }
 
   .phone-mock--side {
-    width: 190px;
+    width: 175px;
   }
 }
 
@@ -771,18 +772,18 @@ input {
   .phone-stage--hero {
     width: 100%;
     max-width: 600px;
-    height: 600px;
+    height: 680px;
     margin-right: 0;
     margin-left: auto;
   }
 
   .phone-mock--main {
-    width: 300px;
+    width: 280px;
     --_radius: 40px;
   }
 
   .phone-mock--side {
-    width: 220px;
+    width: 200px;
     --_radius: 34px;
   }
 
@@ -800,16 +801,16 @@ input {
 @media (min-width: 1200px) {
   .phone-stage,
   .phone-stage--hero {
-    height: 640px;
+    height: 720px;
     max-width: 640px;
   }
 
   .phone-mock--main {
-    width: 320px;
+    width: 300px;
   }
 
   .phone-mock--side {
-    width: 240px;
+    width: 220px;
   }
 }
 
