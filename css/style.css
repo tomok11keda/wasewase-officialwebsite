@@ -642,17 +642,29 @@ input {
   aspect-ratio: var(--phone-aspect);
   border-radius: var(--_radius);
   background: var(--phone-frame);
-  padding: var(--_bezel);
   box-shadow: var(--shadow-phone);
   overflow: hidden;
   line-height: 0;
   isolation: isolate;
 }
 
+.phone-mock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 var(--_bezel) var(--phone-frame);
+  pointer-events: none;
+  z-index: 2;
+}
+
 .phone-mock img {
+  position: absolute;
+  inset: var(--_bezel);
   display: block;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - var(--_bezel) * 2);
+  height: calc(100% - var(--_bezel) * 2);
+  max-width: none;
   object-fit: cover;
   object-position: top center;
   border-radius: calc(var(--_radius) - var(--_bezel));
@@ -1770,9 +1782,10 @@ input {
 .showcase__visual--stack {
   position: relative;
   width: min(100%, 400px);
-  min-height: 420px;
+  min-height: 480px;
   margin: 0 auto;
-  padding-bottom: 8%;
+  padding-bottom: 12%;
+  overflow: visible;
 }
 
 .showcase__visual--stack .phone-mock {
@@ -1872,7 +1885,7 @@ input {
   }
 
   .showcase__visual--stack {
-    height: 440px;
+    height: 520px;
     max-width: 420px;
     margin-left: auto;
     margin-right: 0;
@@ -1886,7 +1899,7 @@ input {
 
 @media (min-width: 960px) {
   .showcase__visual--stack {
-    height: 480px;
+    height: 560px;
   }
 
   .showcase__visual--duo {
