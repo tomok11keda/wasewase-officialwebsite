@@ -29,6 +29,10 @@
   --shadow-phone:
     0 2px 8px rgba(20, 16, 24, 0.06),
     0 24px 48px rgba(20, 16, 24, 0.12);
+  --phone-aspect: 900 / 1957;
+  --phone-radius: 36px;
+  --phone-bezel: 3px;
+  --phone-frame: #1a1518;
 
   --header-h: 56px;
   --max-w: 1200px;
@@ -602,14 +606,15 @@ input {
 
 .phone-stage {
   position: relative;
-  width: min(100%, 380px);
-  height: 460px;
+  width: min(100%, 360px);
+  /* Tall enough for full phone aspect (900/1957) + side tilt */
+  height: 540px;
   margin: 0 auto;
 }
 
 .phone-stage--hero {
-  width: min(100%, 420px);
-  height: 500px;
+  width: min(100%, 400px);
+  height: 560px;
 }
 
 .phone-stage__glow {
@@ -626,76 +631,87 @@ input {
   z-index: 0;
 }
 
-.phone {
+/* Unified phone chrome: screen-only images + CSS frame/radius/shadow */
+.phone-mock {
+  --_radius: var(--phone-radius);
+  --_bezel: var(--phone-bezel);
   margin: 0;
-  position: absolute;
-  overflow: hidden;
-  background: #f4f2f3;
-  border: 1px solid rgba(15, 20, 25, 0.06);
-  border-radius: 28px;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--phone-aspect);
+  border-radius: var(--_radius);
+  background: var(--phone-frame);
   box-shadow: var(--shadow-phone);
-  aspect-ratio: 390 / 848;
+  overflow: hidden;
+  line-height: 0;
+  isolation: isolate;
+}
+
+.phone-mock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 var(--_bezel) var(--phone-frame);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.phone-mock img {
+  position: absolute;
+  inset: var(--_bezel);
+  display: block;
+  width: calc(100% - var(--_bezel) * 2);
+  height: calc(100% - var(--_bezel) * 2);
+  max-width: none;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: calc(var(--_radius) - var(--_bezel));
+  background: #f7f2f3;
+}
+
+.phone-stage .phone-mock {
+  position: absolute;
   z-index: 1;
 }
 
-.phone img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  background: #f4f2f3;
-}
-
-/* App Store素材から切り出した端末（既にベゼル込み） */
-.phone--framed {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  aspect-ratio: auto;
-}
-
-.phone--framed img {
-  position: relative;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 36px rgba(20, 16, 24, 0.18));
-  background: transparent;
-  border-radius: 0;
-}
-
-.phone--main {
+.phone-mock--main {
   z-index: 3;
-  width: min(62%, 240px);
+  width: min(58%, 220px);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 32px;
+  --_radius: 38px;
 }
 
-.phone--hero-main {
-  width: min(68%, 260px);
-}
-
-.phone--side {
+.phone-mock--side {
   z-index: 1;
-  width: min(46%, 168px);
+  width: min(42%, 150px);
   top: 54%;
+  --_radius: 32px;
 }
 
-.phone--left {
+.phone-mock--left {
   left: 0;
   transform: translateY(-50%) rotate(-8deg) scale(0.92);
 }
 
-.phone--right {
+.phone-mock--right {
   right: 0;
   left: auto;
   transform: translateY(-46%) rotate(8deg) scale(0.92);
+}
+
+.phone-mock--lg {
+  width: min(100%, 320px);
+  --_radius: 38px;
+}
+
+.phone-mock--back,
+.phone-mock--front,
+.phone-mock--offset {
+  --_radius: 34px;
 }
 
 @media (min-width: 480px) {
@@ -708,16 +724,15 @@ input {
   .phone-stage,
   .phone-stage--hero {
     width: min(100%, 480px);
-    height: 520px;
+    height: 600px;
   }
 
-  .phone--main,
-  .phone--hero-main {
-    width: 270px;
+  .phone-mock--main {
+    width: 250px;
   }
 
-  .phone--side {
-    width: 190px;
+  .phone-mock--side {
+    width: 175px;
   }
 }
 
@@ -769,27 +784,27 @@ input {
   .phone-stage--hero {
     width: 100%;
     max-width: 600px;
-    height: 600px;
+    height: 680px;
     margin-right: 0;
     margin-left: auto;
   }
 
-  .phone--main,
-  .phone--hero-main {
-    width: 300px;
-    border-radius: 36px;
+  .phone-mock--main {
+    width: 280px;
+    --_radius: 40px;
   }
 
-  .phone--side {
-    width: 220px;
+  .phone-mock--side {
+    width: 200px;
+    --_radius: 34px;
   }
 
-  .phone--left {
+  .phone-mock--left {
     left: 2%;
     top: 58%;
   }
 
-  .phone--right {
+  .phone-mock--right {
     right: 0;
     top: 48%;
   }
@@ -798,17 +813,16 @@ input {
 @media (min-width: 1200px) {
   .phone-stage,
   .phone-stage--hero {
-    height: 640px;
+    height: 720px;
     max-width: 640px;
   }
 
-  .phone--main,
-  .phone--hero-main {
-    width: 320px;
+  .phone-mock--main {
+    width: 300px;
   }
 
-  .phone--side {
-    width: 240px;
+  .phone-mock--side {
+    width: 220px;
   }
 }
 
@@ -1764,40 +1778,23 @@ input {
   min-width: 0;
 }
 
-.shot {
-  margin: 0;
-  border-radius: 28px;
-  overflow: hidden;
-  background: #f3eef0;
-  box-shadow: var(--shadow-phone);
-  line-height: 0;
-}
-
-.shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  vertical-align: top;
-  object-fit: cover;
-  object-position: top center;
-}
-
 /* Stacked pair (timetable + course) */
 .showcase__visual--stack {
   position: relative;
   width: min(100%, 400px);
-  min-height: 420px;
+  min-height: 480px;
   margin: 0 auto;
-  padding-bottom: 8%;
+  padding-bottom: 12%;
+  overflow: visible;
 }
 
-.showcase__visual--stack .shot {
+.showcase__visual--stack .phone-mock {
   position: relative;
   width: 72%;
   margin: 0;
 }
 
-.showcase__visual--stack .shot--back {
+.showcase__visual--stack .phone-mock--back {
   position: absolute;
   left: 0;
   top: 14%;
@@ -1806,14 +1803,13 @@ input {
   z-index: 1;
 }
 
-.showcase__visual--stack .shot--front {
+.showcase__visual--stack .phone-mock--front {
   position: relative;
   margin-left: auto;
   width: 66%;
   z-index: 2;
   transform: rotate(2.5deg);
 }
-
 
 /* Duo social */
 .showcase--social {
@@ -1829,14 +1825,9 @@ input {
   align-items: end;
 }
 
-.showcase__visual--duo .shot {
-  border-radius: 22px;
-}
-
-.showcase__visual--duo .shot--offset {
+.showcase__visual--duo .phone-mock--offset {
   transform: translateY(-18px);
 }
-
 
 /* Focus large */
 .showcase--focus {
@@ -1848,11 +1839,9 @@ input {
   justify-content: center;
 }
 
-.shot--large {
+.showcase__visual--focus .phone-mock--lg {
   width: min(100%, 320px);
-  border-radius: 32px;
 }
-
 
 /* Market panel */
 .showcase--market {
@@ -1869,6 +1858,10 @@ input {
   background:
     radial-gradient(circle at 30% 20%, rgba(137, 30, 43, 0.1), transparent 50%),
     linear-gradient(160deg, #f8f1f3 0%, #fff 70%);
+}
+
+.showcase__visual--panel .phone-mock--lg {
+  width: min(100%, 320px);
 }
 
 @media (min-width: 768px) {
@@ -1892,27 +1885,28 @@ input {
   }
 
   .showcase__visual--stack {
-    height: 440px;
+    height: 520px;
     max-width: 420px;
     margin-left: auto;
     margin-right: 0;
   }
 
-  .shot--large {
+  .showcase__visual--focus .phone-mock--lg,
+  .showcase__visual--panel .phone-mock--lg {
     width: min(100%, 360px);
   }
 }
 
 @media (min-width: 960px) {
   .showcase__visual--stack {
-    height: 480px;
+    height: 560px;
   }
 
   .showcase__visual--duo {
     gap: 20px;
   }
 
-  .showcase__visual--duo .shot--offset {
+  .showcase__visual--duo .phone-mock--offset {
     transform: translateY(-28px);
   }
 }

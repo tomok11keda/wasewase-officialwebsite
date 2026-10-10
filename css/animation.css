@@ -48,8 +48,7 @@
 }
 
 @media (min-width: 960px) {
-  .phone--main,
-  .phone--hero-main {
+  .phone-mock--main {
     animation: phone-float 6.5s ease-in-out infinite;
   }
 }
@@ -72,13 +71,13 @@
   }
 
   .hero__copy > *,
-  .phone--main {
+  .phone-mock--main {
     animation: none !important;
     opacity: 1 !important;
     filter: none !important;
   }
 
-  .phone--main {
+  .phone-mock--main {
     transform: translate(-50%, -50%) !important;
   }
 }
