@@ -1711,7 +1711,8 @@ input {
 .showcase {
   position: relative;
   padding: 56px 0;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .showcase + .showcase {
