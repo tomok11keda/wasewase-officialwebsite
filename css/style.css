@@ -604,20 +604,20 @@ input {
   width: 100%;
 }
 
-.phone-stage {
+/* Hero visual stage: 1 full device + UI detail cards (never half-cut phones) */
+.visual-stage {
   position: relative;
   width: min(100%, 360px);
-  /* Tall enough for full phone aspect (900/1957) + side tilt */
-  height: 540px;
+  height: 560px;
   margin: 0 auto;
 }
 
-.phone-stage--hero {
-  width: min(100%, 400px);
-  height: 560px;
+.visual-stage--hero {
+  width: min(100%, 420px);
+  height: 600px;
 }
 
-.phone-stage__glow {
+.visual-stage__glow {
   position: absolute;
   left: 50%;
   top: 48%;
@@ -631,87 +631,90 @@ input {
   z-index: 0;
 }
 
-/* Unified phone chrome: screen-only images + CSS frame/radius/shadow */
-.phone-mock {
-  --_radius: var(--phone-radius);
-  --_bezel: var(--phone-bezel);
+/* A) Full device — App Store phone with transparent bg + drop shadow only */
+.device-shot {
   margin: 0;
-  position: relative;
+  line-height: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.device-shot img {
   display: block;
   width: 100%;
-  aspect-ratio: var(--phone-aspect);
-  border-radius: var(--_radius);
-  background: var(--phone-frame);
-  box-shadow: var(--shadow-phone);
-  overflow: hidden;
-  line-height: 0;
-  isolation: isolate;
-}
-
-.phone-mock::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 var(--_bezel) var(--phone-frame);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.phone-mock img {
-  position: absolute;
-  inset: var(--_bezel);
-  display: block;
-  width: calc(100% - var(--_bezel) * 2);
-  height: calc(100% - var(--_bezel) * 2);
+  height: auto;
   max-width: none;
-  object-fit: cover;
-  object-position: top center;
-  border-radius: calc(var(--_radius) - var(--_bezel));
-  background: #f7f2f3;
+  filter: drop-shadow(0 18px 36px rgba(20, 16, 24, 0.22));
 }
 
-.phone-stage .phone-mock {
+.visual-stage .device-shot--main {
   position: absolute;
-  z-index: 1;
-}
-
-.phone-mock--main {
   z-index: 3;
-  width: min(58%, 220px);
+  width: min(58%, 230px);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  --_radius: 38px;
 }
 
-.phone-mock--side {
+/* B) Partial UI enlargement — rectangular card, no device frame */
+.ui-card {
+  margin: 0;
+  line-height: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(15, 20, 25, 0.06);
+  box-shadow:
+    0 2px 8px rgba(20, 16, 24, 0.05),
+    0 18px 40px rgba(20, 16, 24, 0.1);
+}
+
+.ui-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.visual-stage .ui-card--hero {
+  position: absolute;
   z-index: 1;
   width: min(42%, 150px);
   top: 54%;
-  --_radius: 32px;
 }
 
-.phone-mock--left {
+.visual-stage .ui-card--left {
   left: 0;
-  transform: translateY(-50%) rotate(-8deg) scale(0.92);
+  transform: translateY(-52%) rotate(-7deg);
 }
 
-.phone-mock--right {
+.visual-stage .ui-card--right {
   right: 0;
   left: auto;
-  transform: translateY(-46%) rotate(8deg) scale(0.92);
+  transform: translateY(-44%) rotate(7deg);
 }
 
-.phone-mock--lg {
-  width: min(100%, 320px);
-  --_radius: 38px;
+.device-shot--feature {
+  width: min(100%, 260px);
+  margin: 0 auto;
 }
 
-.phone-mock--back,
-.phone-mock--front,
-.phone-mock--offset {
-  --_radius: 34px;
+.ui-card--lg {
+  width: min(100%, 340px);
+}
+
+.ui-card--sm {
+  width: min(72%, 220px);
+}
+
+.ui-card--xl {
+  width: min(100%, 380px);
+}
+
+.ui-card--aside {
+  width: min(100%, 280px);
 }
 
 @media (min-width: 480px) {
@@ -721,18 +724,18 @@ input {
     align-items: center;
   }
 
-  .phone-stage,
-  .phone-stage--hero {
+  .visual-stage,
+  .visual-stage--hero {
     width: min(100%, 480px);
     height: 600px;
   }
 
-  .phone-mock--main {
+  .visual-stage .device-shot--main {
     width: 250px;
   }
 
-  .phone-mock--side {
-    width: 175px;
+  .visual-stage .ui-card--hero {
+    width: 168px;
   }
 }
 
@@ -780,49 +783,47 @@ input {
     justify-content: flex-start;
   }
 
-  .phone-stage,
-  .phone-stage--hero {
+  .visual-stage,
+  .visual-stage--hero {
     width: 100%;
     max-width: 600px;
-    height: 680px;
+    height: 640px;
     margin-right: 0;
     margin-left: auto;
   }
 
-  .phone-mock--main {
+  .visual-stage .device-shot--main {
     width: 280px;
-    --_radius: 40px;
   }
 
-  .phone-mock--side {
-    width: 200px;
-    --_radius: 34px;
+  .visual-stage .ui-card--hero {
+    width: 190px;
   }
 
-  .phone-mock--left {
+  .visual-stage .ui-card--left {
     left: 2%;
     top: 58%;
   }
 
-  .phone-mock--right {
+  .visual-stage .ui-card--right {
     right: 0;
     top: 48%;
   }
 }
 
 @media (min-width: 1200px) {
-  .phone-stage,
-  .phone-stage--hero {
-    height: 720px;
+  .visual-stage,
+  .visual-stage--hero {
+    height: 680px;
     max-width: 640px;
   }
 
-  .phone-mock--main {
+  .visual-stage .device-shot--main {
     width: 300px;
   }
 
-  .phone-mock--side {
-    width: 220px;
+  .visual-stage .ui-card--hero {
+    width: 210px;
   }
 }
 
@@ -1778,58 +1779,56 @@ input {
   min-width: 0;
 }
 
-/* Stacked pair (timetable + course) */
-.showcase__visual--stack {
+/* Course: stacked UI cards (partial enlargements, no phone frames) */
+.showcase__visual--cards {
   position: relative;
   width: min(100%, 400px);
-  min-height: 480px;
+  min-height: 420px;
   margin: 0 auto;
-  padding-bottom: 12%;
-  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-.showcase__visual--stack .phone-mock {
-  position: relative;
-  width: 72%;
-  margin: 0;
-}
-
-.showcase__visual--stack .phone-mock--back {
-  position: absolute;
-  left: 0;
-  top: 14%;
-  width: 58%;
-  transform: rotate(-7deg);
+.showcase__visual--cards .ui-card--lg {
+  width: min(100%, 320px);
   z-index: 1;
 }
 
-.showcase__visual--stack .phone-mock--front {
-  position: relative;
-  margin-left: auto;
-  width: 66%;
+.showcase__visual--cards .ui-card--float {
+  align-self: flex-end;
+  margin-top: -48px;
   z-index: 2;
-  transform: rotate(2.5deg);
+  transform: rotate(2deg);
 }
 
-/* Duo social */
+/* Social: full device + UI card */
 .showcase--social {
   background:
     radial-gradient(ellipse 60% 80% at 85% 40%, rgba(137, 30, 43, 0.07), transparent 60%),
     linear-gradient(180deg, #fff 0%, #faf7f8 100%);
 }
 
-.showcase__visual--duo {
+.showcase__visual--device-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-items: end;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
 }
 
-.showcase__visual--duo .phone-mock--offset {
-  transform: translateY(-18px);
+.showcase__visual--device-card .device-shot--feature {
+  width: min(100%, 220px);
+  margin: 0 auto;
 }
 
-/* Focus large */
+.showcase__visual--device-card .ui-card--aside {
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+}
+
+/* Focus / Market: large UI card */
 .showcase--focus {
   background: linear-gradient(180deg, #f7f2f3 0%, #faf8f9 55%, #fff 100%);
 }
@@ -1839,11 +1838,6 @@ input {
   justify-content: center;
 }
 
-.showcase__visual--focus .phone-mock--lg {
-  width: min(100%, 320px);
-}
-
-/* Market panel */
 .showcase--market {
   background:
     linear-gradient(135deg, rgba(137, 30, 43, 0.06), transparent 48%),
@@ -1860,8 +1854,9 @@ input {
     linear-gradient(160deg, #f8f1f3 0%, #fff 70%);
 }
 
-.showcase__visual--panel .phone-mock--lg {
-  width: min(100%, 320px);
+.showcase__visual--focus .ui-card--xl,
+.showcase__visual--panel .ui-card--xl {
+  width: min(100%, 360px);
 }
 
 @media (min-width: 768px) {
@@ -1884,30 +1879,30 @@ input {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
   }
 
-  .showcase__visual--stack {
-    height: 520px;
+  .showcase__visual--cards {
+    min-height: 480px;
     max-width: 420px;
     margin-left: auto;
     margin-right: 0;
   }
 
-  .showcase__visual--focus .phone-mock--lg,
-  .showcase__visual--panel .phone-mock--lg {
-    width: min(100%, 360px);
+  .showcase__visual--focus .ui-card--xl,
+  .showcase__visual--panel .ui-card--xl {
+    width: min(100%, 400px);
+  }
+
+  .showcase__visual--device-card .device-shot--feature {
+    width: min(100%, 260px);
   }
 }
 
 @media (min-width: 960px) {
-  .showcase__visual--stack {
-    height: 560px;
+  .showcase__visual--device-card {
+    gap: 24px;
   }
 
-  .showcase__visual--duo {
-    gap: 20px;
-  }
-
-  .showcase__visual--duo .phone-mock--offset {
-    transform: translateY(-28px);
+  .showcase__visual--cards .ui-card--float {
+    margin-top: -72px;
   }
 }
 
