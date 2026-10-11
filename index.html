@@ -44,8 +44,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="./css/style.css?v=20261009visuals3" />
-  <link rel="stylesheet" href="./css/animation.css?v=20261009visuals3" />
+  <link rel="stylesheet" href="./css/style.css?v=20261009crops1" />
+  <link rel="stylesheet" href="./css/animation.css?v=20261009crops1" />
   <noscript>
     <style>
       .reveal { opacity: 1; transform: none; }
@@ -160,37 +160,37 @@
         </div>
 
         <div class="hero__visual" aria-label="アプリ画面のプレビュー">
-          <div class="phone-stage phone-stage--hero">
-            <div class="phone-stage__glow" aria-hidden="true"></div>
+          <div class="visual-stage visual-stage--hero">
+            <div class="visual-stage__glow" aria-hidden="true"></div>
 
-            <figure class="phone phone--side phone--left">
+            <figure class="ui-card ui-card--hero ui-card--left">
               <img
-                src="./assets/images/shot-timeline.jpg"
-                alt="わせわせのタイムライン画面"
-                width="888"
-                height="1200"
+                src="./assets/images/ui/timeline.jpg"
+                alt="タイムラインの投稿一覧（部分拡大）"
+                width="700"
+                height="1010"
                 decoding="async"
                 fetchpriority="low"
               />
             </figure>
 
-            <figure class="phone phone--main phone--framed phone--hero-main">
+            <figure class="device-shot device-shot--main">
               <img
-                src="./assets/images/shot-community-hi.jpg"
-                alt="わせわせのコミュニティ画面。学部フィルターとスレッド一覧が表示されている"
-                width="519"
-                height="1315"
+                src="./assets/images/devices/community-device.png"
+                alt="わせわせのコミュニティ画面を表示したスマートフォン"
+                width="595"
+                height="1521"
                 decoding="async"
                 fetchpriority="high"
               />
             </figure>
 
-            <figure class="phone phone--side phone--right">
+            <figure class="ui-card ui-card--hero ui-card--right">
               <img
-                src="./assets/images/app-timetable.jpg"
-                alt="わせわせの時間割画面"
-                width="390"
-                height="848"
+                src="./assets/images/ui/messages.jpg"
+                alt="メッセージ一覧のUI（部分拡大）"
+                width="782"
+                height="978"
                 decoding="async"
                 fetchpriority="low"
               />
@@ -246,7 +246,7 @@
         </div>
       </div>
 
-      <!-- 1. 時間割・授業：重なり2台 -->
+      <!-- 1. 時間割・授業：部分拡大UIカード -->
       <article class="showcase showcase--pair reveal reveal--up" data-reveal aria-labelledby="feat-class-heading">
         <div class="showcase__inner">
           <div class="showcase__copy">
@@ -259,18 +259,18 @@
               <li>欠席記録</li>
             </ul>
           </div>
-          <div class="showcase__visual showcase__visual--stack" aria-label="時間割と授業詳細の画面">
-            <figure class="shot shot--back">
-              <img src="./assets/images/shot-course.jpg" alt="わせわせの授業詳細画面。レビューと欠席記録が表示されている" width="911" height="1200" loading="eager" decoding="async" />
+          <div class="showcase__visual showcase__visual--cards" aria-label="授業詳細とレビューの画面（部分拡大）">
+            <figure class="ui-card ui-card--lg">
+              <img src="./assets/images/ui/course.jpg" alt="授業詳細。レビュー評価と欠席記録、授業掲示板が表示されている" width="698" height="1024" loading="eager" decoding="async" />
             </figure>
-            <figure class="shot shot--front">
-              <img src="./assets/images/app-timetable.jpg" alt="わせわせの時間割画面" width="390" height="848" loading="eager" decoding="async" />
+            <figure class="ui-card ui-card--sm ui-card--float">
+              <img src="./assets/images/ui/profile.jpg" alt="プロフィール画面の一部。投稿・時間割・フリマのタブ" width="698" height="982" loading="eager" decoding="async" />
             </figure>
           </div>
         </div>
       </article>
 
-      <!-- 2. タイムライン / コミュニティ：横並び寄り + 色面 -->
+      <!-- 2. タイムライン / コミュニティ：フル端末 + 部分拡大 -->
       <article class="showcase showcase--social reveal reveal--up" data-reveal aria-labelledby="feat-social-heading">
         <div class="showcase__inner showcase__inner--wide">
           <div class="showcase__copy">
@@ -278,18 +278,18 @@
             <h3 id="feat-social-heading">同じキャンパスの「いま」が流れる。</h3>
             <p>学部フィルターのあるタイムラインと、テーマごとのコミュニティ。授業の相談も、キャンパスの話題も、早稲田生同士だから気軽に話せます。</p>
           </div>
-          <div class="showcase__visual showcase__visual--duo" aria-label="タイムラインとコミュニティの画面">
-            <figure class="shot">
-              <img src="./assets/images/shot-timeline.jpg" alt="わせわせのタイムライン画面。投稿一覧と学部フィルター" width="888" height="1200" loading="eager" decoding="async" />
+          <div class="showcase__visual showcase__visual--device-card" aria-label="コミュニティのフル端末とタイムラインの部分拡大">
+            <figure class="device-shot device-shot--feature">
+              <img src="./assets/images/devices/community-device.png" alt="コミュニティ画面のフル端末表示" width="595" height="1521" loading="eager" decoding="async" />
             </figure>
-            <figure class="shot shot--offset">
-              <img src="./assets/images/shot-community.jpg" alt="わせわせのコミュニティ画面。スレッド一覧" width="888" height="1200" loading="eager" decoding="async" />
+            <figure class="ui-card ui-card--aside">
+              <img src="./assets/images/ui/timeline.jpg" alt="タイムライン投稿の部分拡大。学部フィルターと投稿一覧" width="700" height="1010" loading="eager" decoding="async" />
             </figure>
           </div>
         </div>
       </article>
 
-      <!-- 3. DM：大写し1台 -->
+      <!-- 3. DM：部分拡大 -->
       <article class="showcase showcase--focus reveal reveal--up" data-reveal aria-labelledby="feat-dm-heading">
         <div class="showcase__inner">
           <div class="showcase__copy">
@@ -298,14 +298,14 @@
             <p>個人のやりとり、授業の連絡、フリマの相談。ばらばらのチャットをまとめられるので、受け渡しやグループ作業もスムーズです。</p>
           </div>
           <div class="showcase__visual showcase__visual--focus">
-            <figure class="shot shot--large">
-              <img src="./assets/images/shot-messages.jpg" alt="わせわせのメッセージ画面。DM・授業・取引チャットが一覧表示されている" width="935" height="1200" loading="eager" decoding="async" />
+            <figure class="ui-card ui-card--xl">
+              <img src="./assets/images/ui/messages.jpg" alt="メッセージ一覧の部分拡大。DM・授業・取引チャット" width="782" height="978" loading="eager" decoding="async" />
             </figure>
           </div>
         </div>
       </article>
 
-      <!-- 4. フリマ：パネル + 端末 -->
+      <!-- 4. フリマ：部分拡大 -->
       <article class="showcase showcase--market reveal reveal--up" data-reveal aria-labelledby="feat-market-heading">
         <div class="showcase__inner">
           <div class="showcase__copy">
@@ -314,8 +314,8 @@
             <p>学部やキャンパスで絞り込みながら出品を探せます。使わなくなった一冊を、次に必要な早稲田生へ。</p>
           </div>
           <div class="showcase__visual showcase__visual--panel">
-            <figure class="shot shot--large">
-              <img src="./assets/images/shot-fleamarket.jpg" alt="わせわせのフリマ画面。教科書などの出品一覧" width="911" height="1200" loading="eager" decoding="async" />
+            <figure class="ui-card ui-card--xl">
+              <img src="./assets/images/ui/fleamarket.jpg" alt="フリマ画面の部分拡大。出品一覧とキャンパス絞り込み" width="716" height="992" loading="eager" decoding="async" />
             </figure>
           </div>
         </div>

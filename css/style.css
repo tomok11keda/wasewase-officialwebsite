@@ -29,6 +29,10 @@
   --shadow-phone:
     0 2px 8px rgba(20, 16, 24, 0.06),
     0 24px 48px rgba(20, 16, 24, 0.12);
+  --phone-aspect: 900 / 1957;
+  --phone-radius: 36px;
+  --phone-bezel: 3px;
+  --phone-frame: #1a1518;
 
   --header-h: 56px;
   --max-w: 1200px;
@@ -600,19 +604,20 @@ input {
   width: 100%;
 }
 
-.phone-stage {
+/* Hero visual stage: 1 full device + UI detail cards (never half-cut phones) */
+.visual-stage {
   position: relative;
-  width: min(100%, 380px);
-  height: 460px;
+  width: min(100%, 360px);
+  height: 560px;
   margin: 0 auto;
 }
 
-.phone-stage--hero {
+.visual-stage--hero {
   width: min(100%, 420px);
-  height: 500px;
+  height: 600px;
 }
 
-.phone-stage__glow {
+.visual-stage__glow {
   position: absolute;
   left: 50%;
   top: 48%;
@@ -626,76 +631,90 @@ input {
   z-index: 0;
 }
 
-.phone {
+/* A) Full device — App Store phone with transparent bg + drop shadow only */
+.device-shot {
   margin: 0;
-  position: absolute;
-  overflow: hidden;
-  background: #f4f2f3;
-  border: 1px solid rgba(15, 20, 25, 0.06);
-  border-radius: 28px;
-  box-shadow: var(--shadow-phone);
-  aspect-ratio: 390 / 848;
-  z-index: 1;
-}
-
-.phone img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  background: #f4f2f3;
-}
-
-/* App Store素材から切り出した端末（既にベゼル込み） */
-.phone--framed {
+  line-height: 0;
   background: transparent;
   border: none;
-  border-radius: 0;
   box-shadow: none;
-  aspect-ratio: auto;
 }
 
-.phone--framed img {
-  position: relative;
+.device-shot img {
+  display: block;
   width: 100%;
   height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 36px rgba(20, 16, 24, 0.18));
-  background: transparent;
-  border-radius: 0;
+  max-width: none;
+  filter: drop-shadow(0 18px 36px rgba(20, 16, 24, 0.22));
 }
 
-.phone--main {
+.visual-stage .device-shot--main {
+  position: absolute;
   z-index: 3;
-  width: min(62%, 240px);
+  width: min(58%, 230px);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 32px;
 }
 
-.phone--hero-main {
-  width: min(68%, 260px);
+/* B) Partial UI enlargement — rectangular card, no device frame */
+.ui-card {
+  margin: 0;
+  line-height: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(15, 20, 25, 0.06);
+  box-shadow:
+    0 2px 8px rgba(20, 16, 24, 0.05),
+    0 18px 40px rgba(20, 16, 24, 0.1);
 }
 
-.phone--side {
+.ui-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.visual-stage .ui-card--hero {
+  position: absolute;
   z-index: 1;
-  width: min(46%, 168px);
+  width: min(42%, 150px);
   top: 54%;
 }
 
-.phone--left {
+.visual-stage .ui-card--left {
   left: 0;
-  transform: translateY(-50%) rotate(-8deg) scale(0.92);
+  transform: translateY(-52%) rotate(-7deg);
 }
 
-.phone--right {
+.visual-stage .ui-card--right {
   right: 0;
   left: auto;
-  transform: translateY(-46%) rotate(8deg) scale(0.92);
+  transform: translateY(-44%) rotate(7deg);
+}
+
+.device-shot--feature {
+  width: min(100%, 260px);
+  margin: 0 auto;
+}
+
+.ui-card--lg {
+  width: min(100%, 340px);
+}
+
+.ui-card--sm {
+  width: min(72%, 220px);
+}
+
+.ui-card--xl {
+  width: min(100%, 380px);
+}
+
+.ui-card--aside {
+  width: min(100%, 280px);
 }
 
 @media (min-width: 480px) {
@@ -705,19 +724,18 @@ input {
     align-items: center;
   }
 
-  .phone-stage,
-  .phone-stage--hero {
+  .visual-stage,
+  .visual-stage--hero {
     width: min(100%, 480px);
-    height: 520px;
+    height: 600px;
   }
 
-  .phone--main,
-  .phone--hero-main {
-    width: 270px;
+  .visual-stage .device-shot--main {
+    width: 250px;
   }
 
-  .phone--side {
-    width: 190px;
+  .visual-stage .ui-card--hero {
+    width: 168px;
   }
 }
 
@@ -765,50 +783,47 @@ input {
     justify-content: flex-start;
   }
 
-  .phone-stage,
-  .phone-stage--hero {
+  .visual-stage,
+  .visual-stage--hero {
     width: 100%;
     max-width: 600px;
-    height: 600px;
+    height: 640px;
     margin-right: 0;
     margin-left: auto;
   }
 
-  .phone--main,
-  .phone--hero-main {
-    width: 300px;
-    border-radius: 36px;
+  .visual-stage .device-shot--main {
+    width: 280px;
   }
 
-  .phone--side {
-    width: 220px;
+  .visual-stage .ui-card--hero {
+    width: 190px;
   }
 
-  .phone--left {
+  .visual-stage .ui-card--left {
     left: 2%;
     top: 58%;
   }
 
-  .phone--right {
+  .visual-stage .ui-card--right {
     right: 0;
     top: 48%;
   }
 }
 
 @media (min-width: 1200px) {
-  .phone-stage,
-  .phone-stage--hero {
-    height: 640px;
+  .visual-stage,
+  .visual-stage--hero {
+    height: 680px;
     max-width: 640px;
   }
 
-  .phone--main,
-  .phone--hero-main {
-    width: 320px;
+  .visual-stage .device-shot--main {
+    width: 300px;
   }
 
-  .phone--side {
-    width: 240px;
+  .visual-stage .ui-card--hero {
+    width: 210px;
   }
 }
 
@@ -1696,7 +1711,8 @@ input {
 .showcase {
   position: relative;
   padding: 56px 0;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .showcase + .showcase {
@@ -1764,81 +1780,56 @@ input {
   min-width: 0;
 }
 
-.shot {
-  margin: 0;
-  border-radius: 28px;
-  overflow: hidden;
-  background: #f3eef0;
-  box-shadow: var(--shadow-phone);
-  line-height: 0;
-}
-
-.shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  vertical-align: top;
-  object-fit: cover;
-  object-position: top center;
-}
-
-/* Stacked pair (timetable + course) */
-.showcase__visual--stack {
+/* Course: stacked UI cards (partial enlargements, no phone frames) */
+.showcase__visual--cards {
   position: relative;
   width: min(100%, 400px);
   min-height: 420px;
   margin: 0 auto;
-  padding-bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-.showcase__visual--stack .shot {
-  position: relative;
-  width: 72%;
-  margin: 0;
-}
-
-.showcase__visual--stack .shot--back {
-  position: absolute;
-  left: 0;
-  top: 14%;
-  width: 58%;
-  transform: rotate(-7deg);
+.showcase__visual--cards .ui-card--lg {
+  width: min(100%, 320px);
   z-index: 1;
 }
 
-.showcase__visual--stack .shot--front {
-  position: relative;
-  margin-left: auto;
-  width: 66%;
+.showcase__visual--cards .ui-card--float {
+  align-self: flex-end;
+  margin-top: -48px;
   z-index: 2;
-  transform: rotate(2.5deg);
+  transform: rotate(2deg);
 }
 
-
-/* Duo social */
+/* Social: full device + UI card */
 .showcase--social {
   background:
     radial-gradient(ellipse 60% 80% at 85% 40%, rgba(137, 30, 43, 0.07), transparent 60%),
     linear-gradient(180deg, #fff 0%, #faf7f8 100%);
 }
 
-.showcase__visual--duo {
+.showcase__visual--device-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-items: end;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
 }
 
-.showcase__visual--duo .shot {
-  border-radius: 22px;
+.showcase__visual--device-card .device-shot--feature {
+  width: min(100%, 220px);
+  margin: 0 auto;
 }
 
-.showcase__visual--duo .shot--offset {
-  transform: translateY(-18px);
+.showcase__visual--device-card .ui-card--aside {
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
 }
 
-
-/* Focus large */
+/* Focus / Market: large UI card */
 .showcase--focus {
   background: linear-gradient(180deg, #f7f2f3 0%, #faf8f9 55%, #fff 100%);
 }
@@ -1848,13 +1839,6 @@ input {
   justify-content: center;
 }
 
-.shot--large {
-  width: min(100%, 320px);
-  border-radius: 32px;
-}
-
-
-/* Market panel */
 .showcase--market {
   background:
     linear-gradient(135deg, rgba(137, 30, 43, 0.06), transparent 48%),
@@ -1869,6 +1853,11 @@ input {
   background:
     radial-gradient(circle at 30% 20%, rgba(137, 30, 43, 0.1), transparent 50%),
     linear-gradient(160deg, #f8f1f3 0%, #fff 70%);
+}
+
+.showcase__visual--focus .ui-card--xl,
+.showcase__visual--panel .ui-card--xl {
+  width: min(100%, 360px);
 }
 
 @media (min-width: 768px) {
@@ -1891,29 +1880,30 @@ input {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
   }
 
-  .showcase__visual--stack {
-    height: 440px;
+  .showcase__visual--cards {
+    min-height: 480px;
     max-width: 420px;
     margin-left: auto;
     margin-right: 0;
   }
 
-  .shot--large {
-    width: min(100%, 360px);
+  .showcase__visual--focus .ui-card--xl,
+  .showcase__visual--panel .ui-card--xl {
+    width: min(100%, 400px);
+  }
+
+  .showcase__visual--device-card .device-shot--feature {
+    width: min(100%, 260px);
   }
 }
 
 @media (min-width: 960px) {
-  .showcase__visual--stack {
-    height: 480px;
+  .showcase__visual--device-card {
+    gap: 24px;
   }
 
-  .showcase__visual--duo {
-    gap: 20px;
-  }
-
-  .showcase__visual--duo .shot--offset {
-    transform: translateY(-28px);
+  .showcase__visual--cards .ui-card--float {
+    margin-top: -72px;
   }
 }
 
