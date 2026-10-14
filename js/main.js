@@ -3,11 +3,11 @@
  * サイト全体の振る舞い
  *
  * 主な役割:
- * - サイトモード切替（事前登録 ↔ App Store）
+ * - App Store URL の一元適用
  * - ヘッダーのスクロール状態
  * - モバイルメニュー
+ * - モバイル固定インストール CTA
  * - フッター年号
- * - CTA テキストの同期
  */
 
 (function () {
@@ -15,52 +15,44 @@
 
   /**
    * =========================================================
-   * サイトモード設定
-   * ---------------------------------------------------------
-   * "preregister" … 事前登録フォームを表示（現在）
-   * "appstore"    … App Store への導線を表示（正式リリース後）
-   *
-   * 切り替え方:
-   * 1. 下の SITE_MODE を書き換える
-   * 2. appstore のときは APP_STORE_URL も設定する
+   * サイト設定（App Store 導線はここだけ変更）
    * =========================================================
    */
   const SITE_CONFIG = {
-    mode: "preregister", // "preregister" | "appstore"
-    // 正式な App Store URL が確認できるまで未設定（ルートや仮URLは使わない）
-    appStoreUrl: "",
-    ctaLabels: {
-      preregister: "事前登録する",
-      appstore: "App Store で入手",
-    },
+    /** わせわせ公式 App Store ページ */
+    appStoreUrl:
+      "https://apps.apple.com/jp/app/%E3%82%8F%E3%81%9B%E3%82%8F%E3%81%9B/id6785786679",
+    ctaLabel: "App Store で入手",
   };
 
   function init() {
-    applySiteMode(SITE_CONFIG);
-    initPendingStoreCtas();
+    applyAppStoreLinks(SITE_CONFIG);
     initHeaderScroll();
     initMobileMenu();
     initSmoothAnchorClose();
+    initMobileInstallBar(SITE_CONFIG);
     setFooterYear();
   }
 
   /**
-   * Hero / Header の App Store CTA
-   * 正式 URL 未設定時は遷移させず、設定後は target=_blank で開く
+   * すべての App Store CTA に正式 URL を適用する
    */
-  function initPendingStoreCtas() {
-    const url = (SITE_CONFIG.appStoreUrl || "").trim();
-    const links = document.querySelectorAll("[data-store-cta]");
+  function applyAppStoreLinks(config) {
+    const url = (config.appStoreUrl || "").trim();
+    const isValid = /^https:\/\/apps\.apple\.com\//.test(url);
+    const links = document.querySelectorAll(
+      "[data-store-cta], [data-appstore-link]"
+    );
 
     links.forEach((link) => {
-      if (url && /^https:\/\/apps\.apple\.com\//.test(url)) {
+      if (isValid) {
         link.setAttribute("href", url);
         link.setAttribute("target", "_blank");
         link.setAttribute("rel", "noopener noreferrer");
         link.removeAttribute("data-appstore-pending");
         link.removeAttribute("aria-disabled");
       } else {
-        link.setAttribute("href", "#");
+        link.setAttribute("href", "#download");
         link.setAttribute("data-appstore-pending", "");
         link.setAttribute("aria-disabled", "true");
         link.addEventListener("click", (event) => {
@@ -68,56 +60,16 @@
         });
       }
     });
-  }
 
-  /**
-   * 事前登録 / App Store の表示切替
-   * HTML 内の [data-mode] と [data-cta] をまとめて更新します
-   */
-  function applySiteMode(config) {
-    const mode = config.mode === "appstore" ? "appstore" : "preregister";
-
-    // セクション内の CTA ブロックを切替
-    document.querySelectorAll(".cta-block").forEach((block) => {
-      const blockMode = block.getAttribute("data-mode");
-      block.hidden = blockMode !== mode;
-    });
-
-    // ヘッダー・フッターなどの CTA 文言を揃える
-    const label = config.ctaLabels[mode];
     document.querySelectorAll("[data-cta='primary']").forEach((el) => {
-      // ボタン内に子要素がある場合はテキストノードだけ更新しにくいので textContent で統一
       if (el.childElementCount === 0) {
-        el.textContent = label;
-      } else if (!el.querySelector(".btn__label")) {
-        el.textContent = label;
+        el.textContent = config.ctaLabel;
       }
-
-      // App Store モードでは #signup 内フォームではなくストアへ
-      if (mode === "appstore" && el.tagName === "A") {
-        // ヘッダー等は signup セクション（ストア CTA）へスクロールのまま
-        el.setAttribute("href", "#signup");
+      if (el.tagName === "A" && isValid) {
+        el.setAttribute("href", url);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
       }
-    });
-
-    // 既存の signup 内 App Store リンク（Hero/Header の data-store-cta とは別）
-    const storeLinks = document.querySelectorAll("[data-appstore-link]");
-    storeLinks.forEach((link) => {
-      const url = (config.appStoreUrl || "").trim();
-      if (url && /^https:\/\/apps\.apple\.com\//.test(url)) {
-        link.setAttribute("href", url);
-      } else {
-        link.setAttribute("href", "#");
-      }
-      if (mode === "appstore") {
-        link.setAttribute("target", "_blank");
-        link.setAttribute("rel", "noopener noreferrer");
-      }
-    });
-
-    // フッターの「事前登録」リンク文言も同期
-    document.querySelectorAll('.site-footer__nav [data-cta="primary"]').forEach((el) => {
-      el.textContent = mode === "appstore" ? "ダウンロード" : "事前登録する";
     });
   }
 
@@ -149,12 +101,14 @@
       menu.hidden = true;
       toggle.setAttribute("aria-expanded", "false");
       toggle.setAttribute("aria-label", "メニューを開く");
+      document.body.classList.remove("menu-open");
     };
 
     const openMenu = () => {
       menu.hidden = false;
       toggle.setAttribute("aria-expanded", "true");
       toggle.setAttribute("aria-label", "メニューを閉じる");
+      document.body.classList.add("menu-open");
     };
 
     toggle.addEventListener("click", () => {
@@ -163,12 +117,10 @@
       else openMenu();
     });
 
-    // リンクタップで閉じる
     menu.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => closeMenu());
     });
 
-    // Escape で閉じる
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
     });
@@ -176,7 +128,6 @@
 
   /**
    * アンカー遷移時、モバイルメニューが開いていれば閉じる
-   * （ヘッダー外のリンク用の保険）
    */
   function initSmoothAnchorClose() {
     const toggle = document.getElementById("menu-toggle");
@@ -188,9 +139,64 @@
         if (toggle.getAttribute("aria-expanded") === "true") {
           menu.hidden = true;
           toggle.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("menu-open");
         }
       });
     });
+  }
+
+  /**
+   * スマートフォン向け固定インストール CTA
+   * Hero CTA が画面内にある間、またはダウンロード帯が見えている間は隠す
+   */
+  function initMobileInstallBar(config) {
+    const bar = document.getElementById("mobile-install-bar");
+    if (!bar) return;
+
+    const url = (config.appStoreUrl || "").trim();
+    const link = bar.querySelector("[data-store-cta], [data-appstore-link]");
+    if (link && /^https:\/\/apps\.apple\.com\//.test(url)) {
+      link.setAttribute("href", url);
+    }
+
+    const heroActions = document.querySelector(".hero__actions");
+    const downloadSection = document.getElementById("download");
+    const mq = window.matchMedia("(max-width: 767px)");
+
+    const update = () => {
+      if (!mq.matches || document.body.classList.contains("menu-open")) {
+        bar.hidden = true;
+        document.body.classList.remove("has-mobile-install-bar");
+        return;
+      }
+
+      const heroVisible = heroActions
+        ? isInViewport(heroActions, 0.15)
+        : window.scrollY < 120;
+      const downloadVisible = downloadSection
+        ? isInViewport(downloadSection, 0.05)
+        : false;
+
+      const show = !heroVisible && !downloadVisible && window.scrollY > 80;
+      bar.hidden = !show;
+      document.body.classList.toggle("has-mobile-install-bar", show);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", update);
+    } else if (typeof mq.addListener === "function") {
+      mq.addListener(update);
+    }
+  }
+
+  function isInViewport(el, ratio) {
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const visible = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+    return visible / Math.max(rect.height, 1) > ratio;
   }
 
   function setFooterYear() {
@@ -200,10 +206,9 @@
     }
   }
 
-  // 設定を外から変えられるように公開（コンソール検証用）
   window.WaseWase = {
     config: SITE_CONFIG,
-    applySiteMode,
+    applyAppStoreLinks,
   };
 
   if (document.readyState === "loading") {
