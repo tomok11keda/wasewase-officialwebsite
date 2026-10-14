@@ -75,7 +75,8 @@ HTML 側の初期 `href` も同じ URL にしてあるので、JS 無効時で�
 
 `index.html` の `<head>` に title / description / OGP / Twitter Card / JSON-LD を設定しています。
 
-- canonical / og:url: `https://wasewase.app/`
+- canonical / og:url: `https://wasewase-officialwebsite.onrender.com/`
+  （`wasewase.app` は現時点で応答しないため、稼働中の Render 公式LP URL に統一）
 - OGP 画像（`ogp.png`）は未配置のため、現時点では `og:image` を設定していません
 
 推奨アセット（次フェーズ）:
@@ -101,4 +102,4 @@ HTML 側の初期 `href` も同じ URL にしてあるので、JS 無効時で�
 
 - OGP 画像の追加
 - プライバシーポリシー・利用規約ページ
-- 本番ドメイン（`wasewase.app`）の配信確認と正規URLの最終確定
+- `wasewase.app` のDNS / カスタムドメイン設定後、canonical・og:url・JSON-LD の再統一
