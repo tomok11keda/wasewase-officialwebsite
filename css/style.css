@@ -561,20 +561,12 @@ input {
   border-color: var(--soft-border);
 }
 
-.hero__store-note {
-  margin: 0 0 18px;
-  font-size: 0.6875rem;
-  color: var(--muted);
-  opacity: 0.72;
-  letter-spacing: 0.01em;
-}
-
 .hero__facts {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px 18px;
-  margin: 0;
+  margin: 8px 0 0;
   padding: 0;
   list-style: none;
   color: var(--muted);
@@ -1252,6 +1244,10 @@ input {
   color: rgba(255, 255, 255, 0.86);
 }
 
+.cta-band .btn--on-brand {
+  text-decoration: none;
+}
+
 /* =========================================================
    Flow
    ========================================================= */
@@ -1904,6 +1900,81 @@ input {
 
   .showcase__visual--cards .ui-card--float {
     margin-top: -72px;
+  }
+}
+
+/* =========================================================
+   Mobile fixed install CTA
+   ========================================================= */
+.mobile-install-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  padding:
+    10px 12px
+    calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(255, 255, 255, 0.92);
+  border-top: 1px solid var(--border);
+  backdrop-filter: saturate(1.2) blur(14px);
+  -webkit-backdrop-filter: saturate(1.2) blur(14px);
+  box-shadow: 0 -8px 24px rgba(15, 20, 25, 0.06);
+}
+
+.mobile-install-bar[hidden] {
+  display: none !important;
+}
+
+.mobile-install-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.mobile-install-bar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  min-width: 0;
+}
+
+.mobile-install-bar__brand {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.mobile-install-bar__sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.mobile-install-bar__cta {
+  flex-shrink: 0;
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+body.has-mobile-install-bar {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 768px) {
+  .mobile-install-bar {
+    display: none !important;
+  }
+
+  body.has-mobile-install-bar {
+    padding-bottom: 0;
   }
 }
 

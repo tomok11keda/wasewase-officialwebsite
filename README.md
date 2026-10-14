@@ -1,8 +1,8 @@
 # わせわせ（wasewase）公式サイト
 
-早稲田大学生限定のキャンパスアプリ「わせわせ」のランディングページです。
+早稲田大学生向けキャンパスアプリ「わせわせ」のランディングページです。
 
-現在は**事前登録**向け。正式リリース後は、設定を1箇所変えるだけで **App Store 導線**に切り替えられます。
+App Store で正式配信中のインストール獲得を目的とした静的サイトです。
 
 ---
 
@@ -11,8 +11,7 @@
 - HTML
 - CSS
 - Vanilla JavaScript
-- Google Apps Script（フォーム送信）
-- Google Fonts（Noto Sans JP。Hiragino 系が無い環境向け）
+- Google Fonts（Noto Sans JP / Zen Kaku Gothic New。Hiragino 系が無い環境向け）
 
 フレームワーク（React / Next.js など）は使用していません。
 
@@ -27,11 +26,10 @@
 │   ├── style.css        # デザインシステム本体
 │   └── animation.css    # 控えめな入場アニメーション
 ├── js/
-│   ├── main.js          # ヘッダー・メニュー・サイトモード切替
-│   ├── animation.js     # Intersection Observer
-│   └── form.js          # 事前登録フォーム
+│   ├── main.js          # App Store CTA・ヘッダー・モバイル固定CTA
+│   └── animation.js     # Intersection Observer
 ├── assets/
-│   ├── images/          # アプリスクショ
+│   ├── images/          # アプリスクリーンショット
 │   ├── icons/           # ロゴ
 │   └── videos/
 └── README.md
@@ -56,59 +54,35 @@ python -m http.server 5500
 
 ---
 
-## サイトモードの切り替え（事前登録 ↔ App Store）
+## App Store URL の変更
 
-`js/main.js` の `SITE_CONFIG` を編集します。
+インストール導線の URL は `js/main.js` の `SITE_CONFIG.appStoreUrl` で一元管理しています。
 
 ```js
 const SITE_CONFIG = {
-  mode: "preregister", // ← "appstore" に変更
-  appStoreUrl: "https://apps.apple.com/アプリのURL",
-  // ...
+  appStoreUrl:
+    "https://apps.apple.com/jp/app/%E3%82%8F%E3%81%9B%E3%82%8F%E3%81%9B/id6785786679",
+  ctaLabel: "App Store で入手",
 };
 ```
 
-| mode | 表示内容 |
-|------|----------|
-| `preregister` | 事前登録フォーム |
-| `appstore` | App Store ダウンロード CTA |
-
-ヘッダー・フッターの CTA 文言も自動で同期されます。
-
----
-
-## フォーム × Google Apps Script
-
-`js/form.js` の `GAS_ENDPOINT` に Web アプリ URL を設定済みです。
-
-送信 JSON:
-
-```json
-{
-  "nickname": "...",
-  "instagram": "...",
-  "referrer": "",
-  "email": ""
-}
-```
-
-※ HTML 上の入力名 `wasedaEmail` の値は、GAS へは `email` キーで送ります。
-
-送信成功時のみサンクスカードが表示されます。
+HTML 内の `data-store-cta` / `data-appstore-link` 付きリンクも、読み込み時にこの値へ揃えられます。  
+HTML 側の初期 `href` も同じ URL にしてあるので、JS 無効時でも導線は維持されます。
 
 ---
 
 ## SEO / OGP
 
-`index.html` の `<head>` に title / description / OGP / Twitter Card を設定しています。
+`index.html` の `<head>` に title / description / OGP / Twitter Card / JSON-LD を設定しています。
 
-本番ドメインに合わせて、`og:url` や `og:image` の URL を書き換えてください。
+- canonical / og:url: `https://wasewase-officialwebsite.onrender.com/`
+  （`wasewase.app` は現時点で応答しないため、稼働中の Render 公式LP URL に統一）
+- OGP 画像（`ogp.png`）は未配置のため、現時点では `og:image` を設定していません
 
-推奨アセット:
+推奨アセット（次フェーズ）:
 
 - `assets/images/ogp.png`（1200×630）
 - `assets/icons/favicon.ico`
-- `assets/icons/apple-touch-icon.png`
 
 ---
 
@@ -120,14 +94,12 @@ const SITE_CONFIG = {
 - Background: `#F7F9FC`
 - Surface: `#FFFFFF`
 - Text: `#0F1419`
-- 日本語フォント: Hiragino Sans / Noto Sans JP
-- CTA は pill（`border-radius: 999px`）
+- 日本語フォント: Hiragino Sans / Zen Kaku Gothic New / Noto Sans JP
 
 ---
 
 ## 今後の拡張アイデア
 
-- 時間割など、未収録スクリーンショットの追加
-- favicon / OGP 画像の追加
+- OGP 画像の追加
 - プライバシーポリシー・利用規約ページ
-- 公式 Instagram URL の設定（`js/form.js` の `INSTAGRAM_URL`）
+- `wasewase.app` のDNS / カスタムドメイン設定後、canonical・og:url・JSON-LD の再統一
