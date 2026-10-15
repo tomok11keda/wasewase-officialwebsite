@@ -1,0 +1,409 @@
+/**
+ * theme-a.css — Editorial Minimal
+ * Premium × Campus: quiet Apple-like editorial presentation
+ * Does NOT recrop device assets; keeps height:auto on device shots.
+ */
+
+.theme-a {
+  --primary: #891e2b;
+  --primary-hover: #6f1722;
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --muted: #6b6b6b;
+  --border: #e8e6e1;
+  --soft-bg: #f3eee8;
+  --soft-border: #ddd5cc;
+  --hero-bg: #fbfaf7;
+  --hero-ink: #141414;
+  --store-bg: #1a1a1a;
+  --store-bg-hover: #000;
+  --max-w: 1120px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: none;
+  --shadow-device: none;
+  --shadow-phone: 0 24px 60px rgba(20, 16, 24, 0.1);
+  --font: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --font-display: "Shippori Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --ease: 0.25s ease;
+}
+
+.theme-a body,
+body.theme-a {
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Preview banner */
+.design-preview-banner {
+  position: relative;
+  z-index: 80;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 8px 16px;
+  background: #111;
+  color: #fff;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.design-preview-banner a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.9;
+}
+
+.design-preview-banner strong {
+  color: #f3d2d6;
+  font-weight: 700;
+}
+
+.theme-a .site-header {
+  top: 0;
+  background: rgba(251, 250, 247, 0.88);
+  border-bottom: 1px solid transparent;
+}
+
+body.theme-a {
+  /* preview banner sits above sticky header content rhythm */
+  scroll-padding-top: calc(var(--header-h) + 48px);
+}
+
+.theme-a .site-header.is-scrolled {
+  background: rgba(251, 250, 247, 0.96);
+  border-bottom-color: var(--border);
+  box-shadow: none;
+}
+
+.theme-a .brand__name,
+.theme-a .store-cta__label,
+.theme-a .hero__brand-mark,
+.theme-a .hero__title,
+.theme-a .about__statement,
+.theme-a .section__header h2,
+.theme-a .showcase__copy h3,
+.theme-a .cta-band h2,
+.theme-a .flow-step h3,
+.theme-a .faq-item summary,
+.theme-a .section__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.theme-a .hero__title {
+  font-weight: 700;
+  font-size: clamp(2.4rem, 8.5vw, 4.6rem);
+  line-height: 1.22;
+  letter-spacing: 0.01em;
+}
+
+.theme-a .hero__lead {
+  font-weight: 300;
+  font-size: clamp(0.95rem, 2.4vw, 1.125rem);
+  color: #5c5c5c;
+  max-width: 26em;
+}
+
+.theme-a .hero__atmosphere {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fbfaf7 55%, #f4f1ea 100%);
+}
+
+.theme-a .hero {
+  background: var(--hero-bg);
+  padding-top: 20px;
+  padding-bottom: 48px;
+}
+
+.theme-a .hero__eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: #8a8a8a;
+  margin-bottom: 28px;
+}
+
+.theme-a .hero__brand-mark {
+  font-size: 0.875rem;
+  letter-spacing: 0.12em;
+}
+
+.theme-a .hero__actions {
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.theme-a .hero__facts {
+  gap: 10px 22px;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: #7a7a7a;
+}
+
+.theme-a .hero__facts li::before {
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+}
+
+.theme-a .store-cta {
+  border-radius: 8px;
+  min-height: 46px;
+  background: #111;
+}
+
+.theme-a .btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.theme-a .btn--ghost,
+.theme-a .hero__secondary {
+  background: transparent;
+  border-color: rgba(26, 26, 26, 0.16);
+}
+
+.theme-a .visual-stage__glow {
+  opacity: 0.35;
+  filter: blur(18px);
+  background: radial-gradient(circle, rgba(137, 30, 43, 0.1) 0%, transparent 68%);
+}
+
+/* Quieter, larger presentation — no crop on devices */
+.theme-a .visual-stage--hero {
+  width: min(100%, 380px);
+  height: 560px;
+}
+
+.theme-a .visual-stage .device-shot--main {
+  width: min(62%, 236px);
+}
+
+.theme-a .visual-stage .ui-card--hero {
+  width: min(38%, 132px);
+  border-radius: 14px;
+  border-color: rgba(26, 26, 26, 0.05);
+  box-shadow: 0 12px 32px rgba(20, 16, 24, 0.08);
+}
+
+.theme-a .visual-stage .ui-card--left {
+  transform: translateY(-52%) rotate(-4deg);
+}
+
+.theme-a .visual-stage .ui-card--right {
+  transform: translateY(-44%) rotate(4deg);
+}
+
+.theme-a .device-shot img {
+  filter: drop-shadow(0 20px 40px rgba(20, 16, 24, 0.14));
+}
+
+.theme-a .section {
+  padding: 88px 0;
+}
+
+.theme-a .section__label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.theme-a .about__statement {
+  font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+  line-height: 1.55;
+  font-weight: 600;
+  max-width: 18em;
+}
+
+.theme-a .about__note {
+  font-weight: 300;
+  color: #666;
+  max-width: 36em;
+}
+
+.theme-a .point-card {
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  padding: 28px 0 8px;
+  box-shadow: none;
+}
+
+.theme-a .point-card__icon {
+  background: transparent;
+  color: var(--primary);
+  width: auto;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.theme-a .features {
+  background: #fff;
+}
+
+.theme-a .section__header h2 {
+  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.theme-a .section__desc {
+  font-weight: 300;
+  max-width: 34em;
+}
+
+.theme-a .showcase {
+  padding: 48px 0;
+}
+
+.theme-a .showcase__label {
+  letter-spacing: 0.14em;
+  font-size: 0.6875rem;
+}
+
+.theme-a .showcase__copy h3 {
+  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.theme-a .ui-card {
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(20, 16, 24, 0.08);
+  border-color: rgba(26, 26, 26, 0.04);
+}
+
+.theme-a .device-shot--feature {
+  width: min(100%, 280px);
+}
+
+.theme-a .cta-band {
+  background: #1a1a1a;
+  padding: 72px 16px;
+}
+
+.theme-a .cta-band h2 {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.theme-a .cta-band .btn--on-brand {
+  background: #fff;
+  color: #1a1a1a;
+  border-radius: 8px;
+}
+
+.theme-a .flow-step {
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  padding: 28px 0;
+}
+
+.theme-a .flow-step__index {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--soft-border);
+  font-family: var(--font-display);
+}
+
+.theme-a .faq {
+  background: #fff;
+  border-color: var(--border);
+}
+
+.theme-a .faq-item {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  background: transparent;
+}
+
+.theme-a .signup__panel {
+  border: 1px solid var(--border);
+  box-shadow: none;
+  background: #fff;
+}
+
+.theme-a .site-footer {
+  background: var(--hero-bg);
+}
+
+.theme-a .mobile-install-bar {
+  background: rgba(251, 250, 247, 0.94);
+  border-top-color: var(--border);
+  box-shadow: none;
+}
+
+/* Softer motion — hero stays visible immediately (no delayed fade that hides CTA/copy) */
+.theme-a .reveal--up {
+  transform: translateY(10px);
+}
+
+.theme-a .hero__copy > * {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (min-width: 960px) {
+  .theme-a .hero {
+    min-height: calc(100svh - var(--header-h) - 36px);
+    padding: 64px 0 80px;
+    overflow: visible;
+  }
+
+  .theme-a .hero__inner {
+    gap: 64px 72px;
+    grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 1.05fr);
+  }
+
+  .theme-a .hero__title {
+    font-size: clamp(3.25rem, 4.8vw, 4.75rem);
+  }
+
+  .theme-a .visual-stage--hero {
+    max-width: 560px;
+    height: 700px;
+  }
+
+  .theme-a .visual-stage .device-shot--main {
+    /* keep full device in stage: ~268px → ~685px tall */
+    width: 268px;
+  }
+
+  .theme-a .visual-stage .ui-card--hero {
+    width: 168px;
+  }
+
+  .theme-a .about__points {
+    gap: 0 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-a .reveal,
+  .theme-a .hero__copy > *,
+  .theme-a .device-shot--main {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .theme-a .device-shot--main {
+    transform: translate(-50%, -50%) !important;
+  }
+}
