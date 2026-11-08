@@ -2012,6 +2012,49 @@ body.has-mobile-install-bar {
   justify-content: center;
 }
 
+/* Mobile ad traffic: keep brand / proof / CTA tight in the first viewport */
+@media (max-width: 767px) {
+  .hero--cv {
+    padding-top: max(16px, env(safe-area-inset-top, 0px));
+    padding-bottom: 28px;
+  }
+
+  .hero--cv .hero__eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .hero--cv .hero__title {
+    margin-bottom: 12px;
+    font-size: clamp(1.875rem, 8.4vw, 2.5rem);
+  }
+
+  .hero--cv .hero__lead {
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+
+  .hero--cv .social-proof {
+    margin-bottom: 16px;
+  }
+
+  .hero--cv .hero__actions {
+    margin-bottom: 8px;
+  }
+
+  .hero--cv .hero__facts {
+    margin-top: 4px;
+    gap: 6px 14px;
+  }
+
+  .hero--cv .hero__inner {
+    gap: 28px;
+  }
+
+  .hero--cv .visual-stage--hero {
+    height: 520px;
+  }
+}
+
 @media (min-width: 960px) {
   .hero--cv .hero__copy {
     text-align: left;

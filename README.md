@@ -72,9 +72,18 @@ const SITE_CONFIG = {
 };
 ```
 
-- App Store CTA は `data-cta-placement`（`hero` / `features` / `footer` / `sticky` など）付きでクリック計測されます
-- UTM / fbclid は sessionStorage に保持され、イベントに付与されます
+- App Store CTA は `data-cta-placement`（`header` / `hero` / `features` / `footer` / `sticky` など）付きでクリック計測されます
+- イベント: `lp_page_view` / `app_store_click`（`cta_placement` + UTM / fbclid 付き）
+- UTM / fbclid は sessionStorage に保持され、ページ遷移なしの CTA クリックでも付与されます
 - Meta Pixel は未導入（Pixel ID の用意後に別途接続）
+
+### 広告URLの推奨UTM例
+
+```
+https://wasewase-officialwebsite.onrender.com/?utm_source=meta&utm_medium=paid_social&utm_campaign=waseda_install_2026q1&utm_content=feed_creative_a&utm_term=lookalike
+```
+
+Meta 側が付与する `fbclid` も自動で保持されます。
 
 ---
 

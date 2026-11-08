@@ -116,7 +116,9 @@
         }
       });
       if (has) {
-        sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(found));
+        // Merge with any previously stored attribution (URL wins on conflict)
+        const merged = Object.assign({}, getStoredUtm(), found);
+        sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(merged));
       }
     } catch (_) {
       /* ignore */
@@ -132,6 +134,16 @@
     }
   }
 
+  /** Always expose the full attribution key set (empty string when absent). */
+  function getAttributionParams() {
+    const stored = getStoredUtm();
+    const out = {};
+    UTM_KEYS.forEach((key) => {
+      out[key] = stored[key] || "";
+    });
+    return out;
+  }
+
   function ensureDataLayer() {
     window.dataLayer = window.dataLayer || [];
   }
@@ -141,69 +153,89 @@
     window.dataLayer.push(arguments);
   }
 
+  function isGa4Ready(config) {
+    const id = (config.ga4MeasurementId || "").trim();
+    return Boolean(id && /^G-[A-Z0-9]+$/i.test(id));
+  }
+
   function initAnalytics(config) {
     ensureDataLayer();
-    const id = (config.ga4MeasurementId || "").trim();
-    const utm = getStoredUtm();
+    const attribution = getAttributionParams();
+    const pageViewParams = {
+      page_location: window.location.href,
+      page_path: window.location.pathname + window.location.search,
+      ...attribution,
+    };
 
-    // Always record a lightweight page view for future tooling
+    // Always push a structured page view for debugging / future tooling
     window.dataLayer.push({
       event: "lp_page_view",
-      page_location: window.location.href,
-      page_path: window.location.pathname,
-      ...utm,
+      ...pageViewParams,
     });
 
-    if (!id || !/^G-[A-Z0-9]+$/i.test(id)) {
+    if (!isGa4Ready(config)) {
       return;
     }
 
+    const id = config.ga4MeasurementId.trim();
     const script = document.createElement("script");
     script.async = true;
-    script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+    script.src =
+      "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
     document.head.appendChild(script);
 
     window.gtag = window.gtag || gtag;
     gtag("js", new Date());
     gtag("config", id, {
       send_page_view: true,
-      campaign_source: utm.utm_source || undefined,
-      campaign_medium: utm.utm_medium || undefined,
-      campaign_name: utm.utm_campaign || undefined,
-      campaign_content: utm.utm_content || undefined,
-      campaign_term: utm.utm_term || undefined,
+      campaign_source: attribution.utm_source || undefined,
+      campaign_medium: attribution.utm_medium || undefined,
+      campaign_name: attribution.utm_campaign || undefined,
+      campaign_content: attribution.utm_content || undefined,
+      campaign_term: attribution.utm_term || undefined,
     });
+    // Custom funnel event (in addition to the automatic page_view)
+    gtag("event", "lp_page_view", pageViewParams);
   }
 
   function trackEvent(eventName, params) {
     ensureDataLayer();
+    const attribution = getAttributionParams();
     const payload = {
       event: eventName,
-      ...getStoredUtm(),
+      ...attribution,
       ...params,
     };
     window.dataLayer.push(payload);
 
-    if (typeof window.gtag === "function" && SITE_CONFIG.ga4MeasurementId) {
-      window.gtag("event", eventName, params);
+    if (typeof window.gtag === "function" && isGa4Ready(SITE_CONFIG)) {
+      // Pass attribution + event params together so GA4 receives UTM fields
+      window.gtag("event", eventName, Object.assign({}, attribution, params));
     }
   }
 
   function initCtaTracking() {
+    // Capture phase + once-per-click guard to avoid double fire
     document.addEventListener(
       "click",
       (event) => {
+        if (event.button !== 0 && event.button !== undefined) return;
+
         const link = event.target.closest(
           "[data-store-cta], [data-appstore-link]"
         );
         if (!link) return;
 
+        // Ignore synthetic / already-handled clicks on the same event
+        if (event.__wasewaseCtaTracked) return;
+        event.__wasewaseCtaTracked = true;
+
         const placement =
           link.getAttribute("data-cta-placement") || "unknown";
         trackEvent("app_store_click", {
-          placement,
+          cta_placement: placement,
           event_label: placement + "_appstore_click",
-          link_url: link.href,
+          link_url: link.getAttribute("href") || "",
         });
       },
       true
@@ -284,6 +316,7 @@
 
     const heroActions = document.querySelector(".hero__actions");
     const downloadSection = document.getElementById("download");
+    const footer = document.querySelector(".site-footer");
     const mq = window.matchMedia("(max-width: 767px)");
 
     const update = () => {
@@ -299,8 +332,18 @@
       const downloadVisible = downloadSection
         ? isInViewport(downloadSection, 0.05)
         : false;
+      const footerVisible = footer ? isInViewport(footer, 0.02) : false;
+      const nearPageBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 48;
 
-      const show = !heroVisible && !downloadVisible && window.scrollY > 80;
+      // Hide near Hero / footer CTA so content and footer aren't covered
+      const show =
+        !heroVisible &&
+        !downloadVisible &&
+        !footerVisible &&
+        !nearPageBottom &&
+        window.scrollY > 80;
       bar.hidden = !show;
       document.body.classList.toggle("has-mobile-install-bar", show);
     };
@@ -335,6 +378,7 @@
     applySocialProof,
     trackEvent,
     getStoredUtm,
+    getAttributionParams,
   };
 
   if (document.readyState === "loading") {
