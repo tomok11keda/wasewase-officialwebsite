@@ -54,20 +54,36 @@ python -m http.server 5500
 
 ---
 
-## App Store URL の変更
+## App Store URL / Social Proof / 計測
 
-インストール導線の URL は `js/main.js` の `SITE_CONFIG.appStoreUrl` で一元管理しています。
+インストール導線・認証済み人数・GA4 は `js/main.js` の `SITE_CONFIG` で一元管理しています。
 
 ```js
 const SITE_CONFIG = {
   appStoreUrl:
     "https://apps.apple.com/jp/app/%E3%82%8F%E3%81%9B%E3%82%8F%E3%81%9B/id6785786679",
   ctaLabel: "App Store で入手",
+  socialProof: {
+    countLabel: "250+",
+    text: "早稲田大学生が認証済み",
+  },
+  // GA4 Web データストリーム Measurement ID
+  ga4MeasurementId: "G-ZXF6S5B8MP",
 };
 ```
 
-HTML 内の `data-store-cta` / `data-appstore-link` 付きリンクも、読み込み時にこの値へ揃えられます。  
-HTML 側の初期 `href` も同じ URL にしてあるので、JS 無効時でも導線は維持されます。
+- App Store CTA は `data-cta-placement`（`header` / `hero` / `features` / `footer` / `sticky` など）付きでクリック計測されます
+- イベント: `lp_page_view` / `app_store_click`（`cta_placement` + UTM / fbclid 付き）
+- UTM / fbclid は sessionStorage に保持され、ページ遷移なしの CTA クリックでも付与されます
+- Meta Pixel は未導入（Pixel ID の用意後に別途接続）
+
+### 広告URLの推奨UTM例
+
+```
+https://wasewase-officialwebsite.onrender.com/?utm_source=meta&utm_medium=paid_social&utm_campaign=waseda_install_2026q1&utm_content=feed_creative_a&utm_term=lookalike
+```
+
+Meta 側が付与する `fbclid` も自動で保持されます。
 
 ---
 
