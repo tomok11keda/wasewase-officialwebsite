@@ -24,42 +24,25 @@
   transform: translateY(16px);
 }
 
-/* Hero enter — keep transforms on phones intact (animate opacity only) */
+/* Hero: keep content visible immediately for ad landing CV */
 .hero__copy > * {
-  animation: hero-fade-up 0.85s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+  opacity: 1;
 }
 
-.hero__eyebrow { animation-delay: 0.05s; }
-.hero__title { animation-delay: 0.14s; }
-.hero__lead { animation-delay: 0.24s; }
-.hero__actions { animation-delay: 0.34s; }
-.hero__store-note { animation-delay: 0.4s; }
-.hero__facts { animation-delay: 0.46s; }
-
-@keyframes hero-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Optional gentle float — disabled under reduced-motion below */
 @media (min-width: 960px) {
   .device-shot--main {
-    animation: device-float 6.5s ease-in-out infinite;
+    animation: device-float 7s ease-in-out infinite;
   }
 }
 
 @keyframes device-float {
   0%,
   100% {
-    transform: translate(-50%, calc(-50% - 4px));
+    transform: translate(-50%, calc(-50% - 2px));
   }
   50% {
-    transform: translate(-50%, calc(-50% - 14px));
+    transform: translate(-50%, calc(-50% - 8px));
   }
 }
 

@@ -54,20 +54,27 @@ python -m http.server 5500
 
 ---
 
-## App Store URL の変更
+## App Store URL / Social Proof / 計測
 
-インストール導線の URL は `js/main.js` の `SITE_CONFIG.appStoreUrl` で一元管理しています。
+インストール導線・認証済み人数・GA4 は `js/main.js` の `SITE_CONFIG` で一元管理しています。
 
 ```js
 const SITE_CONFIG = {
   appStoreUrl:
     "https://apps.apple.com/jp/app/%E3%82%8F%E3%81%9B%E3%82%8F%E3%81%9B/id6785786679",
   ctaLabel: "App Store で入手",
+  socialProof: {
+    countLabel: "250+",
+    text: "早稲田大学生が認証済み",
+  },
+  // 発行済みの GA4 測定IDを入れる（空なら gtag は読み込まない）
+  ga4MeasurementId: "",
 };
 ```
 
-HTML 内の `data-store-cta` / `data-appstore-link` 付きリンクも、読み込み時にこの値へ揃えられます。  
-HTML 側の初期 `href` も同じ URL にしてあるので、JS 無効時でも導線は維持されます。
+- App Store CTA は `data-cta-placement`（`hero` / `features` / `footer` / `sticky` など）付きでクリック計測されます
+- UTM / fbclid は sessionStorage に保持され、イベントに付与されます
+- Meta Pixel は未導入（Pixel ID の用意後に別途接続）
 
 ---
 
