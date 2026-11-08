@@ -67,8 +67,8 @@ const SITE_CONFIG = {
     countLabel: "250+",
     text: "早稲田大学生が認証済み",
   },
-  // 発行済みの GA4 測定IDを入れる（空なら gtag は読み込まない）
-  ga4MeasurementId: "",
+  // GA4 Web データストリーム Measurement ID
+  ga4MeasurementId: "G-ZXF6S5B8MP",
 };
 ```
 

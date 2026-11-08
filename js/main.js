@@ -31,7 +31,7 @@
      * 空文字のときは gtag を読み込まず、dataLayer への push のみ行う
      * ※ ID を捏造しないこと。発行後にここへ設定する
      */
-    ga4MeasurementId: "",
+    ga4MeasurementId: "G-ZXF6S5B8MP",
   };
 
   const UTM_KEYS = [
